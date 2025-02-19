@@ -1,0 +1,26 @@
+{
+    "problems.autoReveal": true,
+    "problems.showCurrentInStatus": true,
+    "typescript.reportStyleChecksAsWarnings": true,
+    "typescript.validate.enable": true,
+    "typescript.surveys.enabled": false,
+    "typescript.tsc.autoDetect": "watch",
+    "task.problemMatchers.neverPrompt": true,
+    "problems.decorations.enabled": true,
+    "problems.defaultViewMode": "tree",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "typescript.tsserver.watchOptions": {
+        "watchFile": "useFsEvents",
+        "watchDirectory": "useFsEvents"
+    },
+    "task.saveBeforeRun": "always",
+    "problems.showMinimal": false,
+    "window.autoDetectColorScheme": true,
+    "problems.sortOrder": "severity",
+    "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+    "tasks.showOutput": "always",
+    "problems.fetchOnline": true,
+    "typescript.tsserver.maxTsServerMemory": 4096,
+    "editor.renderControlCharacters": true,
+    "editor.renderWhitespace": "all"
+}
