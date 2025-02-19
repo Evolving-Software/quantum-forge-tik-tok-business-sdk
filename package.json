@@ -1,5 +1,5 @@
 {
-  "name": "@quantum-forge/tik-tok-business-sdk",
+  "name": "quantum-forge/tik-tok-business-sdk",
   "version": "0.0.1",
   "description": "A hard fork of the TikTok Business SDK upgraded to use typescript and modern javascript features",
   "types": "dist/index.d.ts",
