@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in
  * the LICENSE file in the root directory of this source tree.
  */
-import ApiClient from "../ApiClient.js";
+import ApiClient from '../ApiClient';
 import {CustomAudienceApplyBody} from '../model/CustomAudienceApplyBody';
 import {CustomAudienceCreateBody} from '../model/CustomAudienceCreateBody';
 import {CustomAudienceDeleteBody} from '../model/CustomAudienceDeleteBody';
@@ -29,10 +29,18 @@ interface QueryParams {
 * @version 0.1.4
 */
 export class AudienceApi {
-  private apiClient: ApiClient;
+  private apiClient: ApiClient = {} as ApiClient;
 
   constructor(apiClient?: ApiClient) {
-    this.apiClient = apiClient || ApiClient.instance;
+    if (apiClient) {
+      this.apiClient = apiClient;
+    } else {
+      import("../ApiClient").then(module => {
+        this.apiClient = module.default.instance;
+      }).catch(() => {
+        throw new Error("Failed to load ApiClient module");
+      });
+    }
   }
 
   /**

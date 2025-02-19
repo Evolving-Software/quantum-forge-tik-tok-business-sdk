@@ -7,6 +7,13 @@
 import {AdAcoBodyCommonMaterialTrackingInfo} from './AdAcoBodyCommonMaterialTrackingInfo';
 
 /**
+* Function to dynamically import modules when needed.
+*/
+function dynamicallyImportTrackingInfoModules() {
+   return import('./AdAcoBodyCommonMaterialTrackingInfo');
+}
+
+/**
  * The AdAcoBodyCommonMaterial model module.
  * @module model/AdAcoBodyCommonMaterial
  * @version 0.1.4
