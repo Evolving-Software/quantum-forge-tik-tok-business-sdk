@@ -1,7 +1,7 @@
 {
   "name": "@quantum-forge/tik-tok-business-sdk",
   "version": "0.0.1",
-  "description": "A hard fork of the TikTok Business SDK upgraded to use typescript and modern javascript features",
+  "description": "Modern TypeScript SDK for the TikTok Business API with strict type checking and ESM support",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
