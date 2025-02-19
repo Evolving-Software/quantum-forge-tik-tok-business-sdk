@@ -7,13 +7,6 @@
 import {AdAcoBodyAvatarIcon} from './AdAcoBodyAvatarIcon';
 
 /**
-* Function to dynamically import modules when needed.
-*/
-function dynamicallyImportAvatarIconModules() {
-   return import('./AdAcoBodyAvatarIcon');
-}
-
-/**
  * The AdAcoBodyAvatarIconList model module.
  * @module model/AdAcoBodyAvatarIconList
  * @version 0.1.4
