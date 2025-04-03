@@ -50,7 +50,10 @@ export class DmpcustomAudiencerulecreateRuleSpecExclusionRuleSetFilterSetFilters
     if (data.hasOwnProperty('operator'))
       obj.operator = ApiClient.convertToType(data['operator'], 'String');
     if (data.hasOwnProperty('parameter_filters'))
-      obj.parameter_filters = ApiClient.convertToType(data['parameter_filters'], [DmpcustomAudiencerulecreateRuleSpecExclusionRuleSetFilterSetParameterFilters]);
+      // Manual array mapping using the model's static method
+      obj.parameter_filters = Array.isArray(data['parameter_filters']) 
+        ? data['parameter_filters'].map((item: any) => DmpcustomAudiencerulecreateRuleSpecExclusionRuleSetFilterSetParameterFilters.constructFromObject(item)) 
+        : undefined;
     if (data.hasOwnProperty('value'))
       obj.value = ApiClient.convertToType(data['value'], 'String');
 

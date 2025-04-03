@@ -41,7 +41,7 @@ export class DmpcustomAudiencerulecreateRuleSpecExclusionRuleSet {
       if (data.hasOwnProperty('operator'))
         obj.operator = ApiClient.convertToType(data['operator'], 'String');
       if (data.hasOwnProperty('rules'))
-        obj.rules = ApiClient.convertToType(data['rules'], [DmpcustomAudiencerulecreateRuleSpecExclusionRuleSetRules]);
+        obj.rules = ApiClient.convertToType(data['rules'], new Array) as Array<DmpcustomAudiencerulecreateRuleSpecExclusionRuleSetRules>;
     }
     return obj;
   }

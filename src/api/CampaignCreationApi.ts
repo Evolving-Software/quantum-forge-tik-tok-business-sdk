@@ -4,14 +4,19 @@
  * This source code is licensed under the MIT license found in
  * the LICENSE file in the root directory of this source tree.
  */
-import ApiClient from "../ApiClient";
-import { CampaignCreateBody } from '../model/CampaignCreateBody';
-import { CampaignStatusUpdateBody } from '../model/CampaignStatusUpdateBody';
-import { CampaignUpdateBody } from '../model/CampaignUpdateBody';
-import { FilteringCampaignGet } from '../model/FilteringCampaignGet';
+// Import the default instance and rename it for clarity
+import ApiClientInstance from "../ApiClient";
+// Import the interface type
+import { ApiClientInterface } from "@/types";
+// Import required model types
+import type { CampaignCreateBody } from '../model/CampaignCreateBody';
+import type { CampaignStatusUpdateBody } from '../model/CampaignStatusUpdateBody';
+import type { CampaignUpdateBody } from '../model/CampaignUpdateBody';
+import type { FilteringCampaignGet } from '../model/FilteringCampaignGet';
 import { InlineResponse200 } from '../model/InlineResponse200';
 
-type Callback = (error: string | null, data?: InlineResponse200, response?: string) => void;
+// Define the callback type matching ApiClientInterface
+type Callback = (error: Error | null, data?: InlineResponse200, response?: Response) => void;
 
 /**
 * CampaignCreation service.
@@ -19,7 +24,7 @@ type Callback = (error: string | null, data?: InlineResponse200, response?: stri
 * @version 0.1.4
 */
 export class CampaignCreationApi {
-    private apiClient: ApiClient;
+    private apiClient: ApiClientInterface; // Use interface type
 
     /**
     * Constructs a new CampaignCreationApi. 
@@ -28,8 +33,8 @@ export class CampaignCreationApi {
     * @param {ApiClient} [apiClient] Optional API client implementation to use,
     * default to {@link module:ApiClient#instance} if unspecified.
     */
-    constructor(apiClient?: ApiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
+    constructor(apiClient?: ApiClientInterface) {
+        this.apiClient = apiClient || ApiClientInstance;
     }
 
     /**
@@ -49,7 +54,7 @@ export class CampaignCreationApi {
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
     campaignCreate(Access_Token: string, opts: { body?: CampaignCreateBody } = {}, callback?: Callback): Promise<InlineResponse200> {
-        let postBody = opts['body'];
+        const postBody = opts['body'];
         // verify the required parameter 'Access_Token' is set
         if (Access_Token === undefined || Access_Token === null) {
             throw new Error("Missing the required parameter 'Access_Token' when calling campaignCreate");
@@ -69,9 +74,9 @@ export class CampaignCreationApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/campaign/create/', 'POST',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody as any,
+            authNames, contentTypes, accepts, returnType, callback as any
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -112,10 +117,10 @@ export class CampaignCreationApi {
         const pathParams = {};
         const queryParams = {
             'advertiser_id': advertiser_id,
-            'filtering': opts['filtering'],
+            'filtering': opts.filtering ? JSON.stringify(opts.filtering) : undefined, // Stringify complex objects for query
             'page': opts['page'],
             'page_size': opts['page_size'],
-            'fields': opts['fields'] ? this.apiClient.buildCollectionParam(opts['fields'], 'multi') : undefined
+            'fields': opts.fields ? opts.fields.join(',') : undefined // Replace buildCollectionParam
         };
         const headerParams = {
             'Access-Token': Access_Token
@@ -130,8 +135,8 @@ export class CampaignCreationApi {
         return this.apiClient.callApi(
             '/open_api/v1.3/campaign/get/', 'GET',
             pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            authNames, contentTypes, accepts, returnType, callback as any
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -151,7 +156,7 @@ export class CampaignCreationApi {
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
     campaignStatusUpdate(Access_Token: string, opts: { body?: CampaignStatusUpdateBody } = {}, callback?: Callback): Promise<InlineResponse200> {
-        const postBody = opts['body'];
+        const postBody = opts.body;
         
         if (Access_Token === undefined || Access_Token === null) {
             throw new Error("Missing the required parameter 'Access_Token' when calling campaignStatusUpdate");
@@ -171,9 +176,9 @@ export class CampaignCreationApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/campaign/status/update/', 'POST',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody as any,
+            authNames, contentTypes, accepts, returnType, callback as any
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -193,7 +198,7 @@ export class CampaignCreationApi {
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
     campaignUpdate(Access_Token: string, opts: { body?: CampaignUpdateBody } = {}, callback?: Callback): Promise<InlineResponse200> {
-        const postBody = opts['body'];
+        const postBody = opts.body;
         
         if (Access_Token === undefined || Access_Token === null) {
             throw new Error("Missing the required parameter 'Access_Token' when calling campaignUpdate");
@@ -213,8 +218,8 @@ export class CampaignCreationApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/campaign/update/', 'POST',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody as any,
+            authNames, contentTypes, accepts, returnType, callback as any
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 }

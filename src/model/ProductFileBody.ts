@@ -42,9 +42,9 @@ export class ProductFileBody {
             throw new Error("Data cannot be null");
         }
 
-        const bc_id = ApiClient.convertToType(data['bc_id'], 'String');
-        const catalog_id = ApiClient.convertToType(data['catalog_id'], 'String');
-        const file_url = ApiClient.convertToType(data['file_url'], 'String');
+        const bc_id = ApiClient.convertToType(data['bc_id'], 'String') as string;
+        const catalog_id = ApiClient.convertToType(data['catalog_id'], 'String') as string;
+        const file_url = ApiClient.convertToType(data['file_url'], 'String') as string;
 
         if (!obj) {
             obj = new ProductFileBody(bc_id, catalog_id, file_url);

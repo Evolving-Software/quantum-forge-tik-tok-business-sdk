@@ -1,37 +1,53 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
-import ApiClient from '../ApiClient';
+import { ApiClient } from "../ApiClient";
+import type { ModelBase } from "../types";
 
 /**
- * The AdAcoBodyMediaInfoList model module.
- * @module model/AdAcoBodyMediaInfoList
- * @version 0.1.1
+ * The AdAcoBodyMediaInfoList model.
  */
-export class AdAcoBodyMediaInfoList {
-    /** @type {Object} */
-    media_info?: object;
+export class AdAcoBodyMediaInfoList implements ModelBase {
+    'imageInfo'?: Record<string, unknown>;
+    'videoInfo'?: Record<string, unknown>;
+    'mediaId'?: string;
+    'mediaType'?: string;
+
+    constructor() {
+        // Initialize any required fields
+    }
 
     /**
-     * Constructs a <code>AdAcoBodyMediaInfoList</code> from a plain JavaScript object, optionally creating a new instance.
-     * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-     * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/AdAcoBodyMediaInfoList} obj Optional instance to populate.
-     * @return {module:model/AdAcoBodyMediaInfoList} The populated <code>AdAcoBodyMediaInfoList</code> instance.
+     * Returns an instance of AdAcoBodyMediaInfoList populated with the given data
      */
-    static constructFromObject(data: any, obj?: AdAcoBodyMediaInfoList): AdAcoBodyMediaInfoList {
-        if (!data) return new AdAcoBodyMediaInfoList();
-        
-        obj = obj || new AdAcoBodyMediaInfoList();
-        
-        if (data.hasOwnProperty('media_info')) {
-            obj.media_info = ApiClient.convertToType(data['media_info'], Object);
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
+
+        if (typedData['imageInfo'] !== undefined) {
+            this['imageInfo'] = ApiClient.convertToType(typedData['imageInfo'], 'Object') as Record<string, unknown>;
+        }
+        if (typedData['videoInfo'] !== undefined) {
+            this['videoInfo'] = ApiClient.convertToType(typedData['videoInfo'], 'Object') as Record<string, unknown>;
+        }
+        if (typedData['mediaId'] !== undefined) {
+            this['mediaId'] = ApiClient.convertToType(typedData['mediaId'], 'String') as string;
+        }
+        if (typedData['mediaType'] !== undefined) {
+            this['mediaType'] = ApiClient.convertToType(typedData['mediaType'], 'String') as string;
         }
 
-        return obj;
+        return this;
+    }
+
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): AdAcoBodyMediaInfoList {
+        const instance = new AdAcoBodyMediaInfoList();
+        return instance.constructFromObject(data);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AdAcoBodyMediaInfoList {
+        return AdAcoBodyMediaInfoList.fromObject(data);
     }
 }
-

@@ -1,212 +1,381 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
-import ApiClient from '../ApiClient';
-import { AdgroupcreateActions } from './AdgroupcreateActions';
-import { AdgroupcreateAudienceRule } from './AdgroupcreateAudienceRule';
-import { AdgroupcreateExcludedCustomActions } from './AdgroupcreateExcludedCustomActions';
-import { AdgroupcreateIncludedCustomActions } from './AdgroupcreateIncludedCustomActions';
-import { AdgroupcreateTargetingExpansion } from './AdgroupcreateTargetingExpansion';
+import { ApiClient } from "../ApiClient";
+import { type ModelBase, createArraySpec } from "../types";
+import { AdgroupcreateActions } from "./AdgroupcreateActions";
+import { AdgroupcreateAudienceRuleExclusions } from "./AdgroupcreateAudienceRuleExclusions";
+import { AdgroupcreateAudienceRuleInclusions } from "./AdgroupcreateAudienceRuleInclusions";
 
 /**
- * The AdgroupCreateBody model module.
- * @module model/AdgroupCreateBody
- * @version 0.1.4
+ * The AdgroupCreateBody model.
  */
-export class AdgroupCreateBody {
-    [key: string]: any;  // Index signature for dynamic properties
+export class AdgroupCreateBody implements ModelBase {
+    'actions'?: AdgroupcreateActions;
+    'adgroupName'?: string;
+    'advertiserId'?: string;
+    'ageGroups'?: string[];
+    'androidOsv'?: string;
+    'appId'?: string;
+    'audienceIds'?: string[];
+    'audienceRule'?: string;
+    'audienceRuleExclusions'?: AdgroupcreateAudienceRuleExclusions;
+    'audienceRuleInclusions'?: AdgroupcreateAudienceRuleInclusions;
+    'audienceType'?: string;
+    'autoTargetingEnabled'?: string;
+    'billingEvent'?: string;
+    'billingSpec'?: string;
+    'blockedPangleAppIds'?: string[];
+    'brandSafetyType'?: string;
+    'budgetOptimizeOn'?: string;
+    'campaignId'?: string;
+    'carrierIds'?: string[];
+    'catalogAuthorized'?: string;
+    'catalogId'?: string;
+    'comments'?: string;
+    'contextualTagIds'?: string[];
+    'conversionBid'?: string;
+    'conversionId'?: string;
+    'creativeMaterialMode'?: string;
+    'dayparting'?: string;
+    'deviceModelIds'?: string[];
+    'devicePriceRanges'?: string[];
+    'excludedAudienceIds'?: string[];
+    'excludedCustomActions'?: string[];
+    'excludedPangleAudiencePackageIds'?: string[];
+    'frequency'?: string;
+    'frequencySchedule'?: string;
+    'gender'?: string;
+    'householdIncome'?: string[];
+    'identityAuthorizedBcId'?: string;
+    'identityId'?: string;
+    'identityType'?: string;
+    'interestCategoryIds'?: string[];
+    'interestKeywordIds'?: string[];
+    'interestKeywords'?: string[];
+    'internetStatus'?: string[];
+    'ios14Targeting'?: string;
+    'iosOsv'?: string;
+    'isHfss'?: string;
+    'languageIds'?: string[];
+    'locationIds'?: string[];
+    'minAndroidVersion'?: string;
+    'minIosVersion'?: string;
+    'networkTypes'?: string[];
+    'nextDayRetention'?: string;
+    'operatingSystem'?: string[];
+    'operationSpec'?: string;
+    'optimizationEvent'?: string;
+    'optimizationGoal'?: string;
+    'pacing'?: string;
+    'pixelId'?: string;
+    'placementIds'?: string[];
+    'placementType'?: string;
+    'productSource'?: string;
+    'promotedObjectId'?: string;
+    'promotedObjectType'?: string;
+    'purchaseIntentionKeywordIds'?: string[];
+    'roasBid'?: string;
+    'schedule'?: string;
+    'shoppingAds'?: string;
+    'targetingExpansion'?: string;
 
-    adgroup_name: string;
-    advertiser_id: string;
-    billing_event: string;
-    campaign_id: string;
-    location_ids: Array<string>;
-    schedule_start_time: string;
-    schedule_type: string;
-
-    // Optional properties
-    actions?: AdgroupcreateActions;
-    adgroup_app_profile_page_state?: string;
-    age_groups?: Array<string>;
-    app_id?: string;
-    audience_ids?: Array<string>;
-    audience_rule?: AdgroupcreateAudienceRule;
-    audience_type?: string;
-    auto_targeting_enabled?: boolean;
-    bid_display_mode?: string;
-    bid_price?: number;
-    bid_type?: string;
-    blocked_pangle_app_ids?: Array<string>;
-    brand_safety_partner?: string;
-    brand_safety_type?: string;
-    budget?: number;
-    budget_mode?: string;
-    budget_optmize_on?: boolean;
-    carrier_ids?: Array<string>;
-    catalog_authorized_bc_id?: string;
-    catalog_id?: string;
-    comment_disabled?: boolean;
-    contextual_tag_ids?: Array<string>;
-    conversion_bid_price?: number;
-    conversion_id?: string;
-    creative_material_mode?: string;
-    dayparting?: string;
-    deep_bid_type?: string;
-    deep_cpa_bid?: number;
-    device_model_ids?: Array<string>;
-    device_price_ranges?: Array<string>;
-    excluded_audience_ids?: Array<string>;
-    excluded_custom_actions?: AdgroupcreateExcludedCustomActions;
-    excluded_pangle_audience_package_ids?: Array<string>;
-    frequency?: number;
-    frequency_schedule?: number;
-    gender?: string;
-    household_income?: Array<string>;
-    identity_authorized_bc_id?: string;
-    identity_id?: string;
-    identity_type?: string;
-    included_custom_actions?: AdgroupcreateIncludedCustomActions;
-    included_pangle_audience_package_ids?: Array<string>;
-    interest_category_ids?: Array<string>;
-    interest_keyword_ids?: Array<string>;
-    interest_keywords?: Array<string>;
-    ios14_targeting?: string;
-    is_hfss?: boolean;
-    languages?: Array<string>;
-    min_android_version?: string;
-    min_ios_version?: string;
-    network_types?: Array<string>;
-    next_day_retention?: number;
-    operating_systems?: Array<string>;
-    operation_status?: string;
-    optimization_event?: string;
-    optimization_goal?: string;
-    pacing?: string;
-    pixel_id?: string;
-    placement_type?: string;
-    placements?: Array<string>;
-    product_set_id?: string;
-    product_source?: string;
-    promotion_type?: string;
-    promotion_website_type?: string;
-    purchase_intention_keyword_ids?: Array<string>;
-    request_id?: string;
-    roas_bid?: number;
-    schedule_end_time?: string;
-    secondary_optimization_event?: string;
-    shopping_ads_retargeting_actions_days?: number;
-    shopping_ads_retargeting_type?: string;
-    shopping_ads_type?: string;
-    skip_learning_phase?: boolean;
-    spending_power?: Array<string>;
-    statistic_type?: string;
-    store_authorized_bc_id?: string;
-    store_id?: string;
-    targeting_expansion?: AdgroupcreateTargetingExpansion;
-    video_download_disabled?: boolean;
-
-    /**
-     * Constructs a new <code>AdgroupCreateBody</code>.
-     * @param adgroup_name {String} 
-     * @param advertiser_id {String} 
-     * @param billing_event {String} 
-     * @param campaign_id {String} 
-     * @param location_ids {Array<String>} 
-     * @param schedule_start_time {String} 
-     * @param schedule_type {String} 
-     */
-    constructor(adgroup_name: string, advertiser_id: string, billing_event: string, campaign_id: string, location_ids: Array<string>, schedule_start_time: string, schedule_type: string) {
-        this.adgroup_name = adgroup_name;
-        this.advertiser_id = advertiser_id;
-        this.billing_event = billing_event;
-        this.campaign_id = campaign_id;
-        this.location_ids = location_ids;
-        this.schedule_start_time = schedule_start_time;
-        this.schedule_type = schedule_type;
+    constructor() {
+        // Initialize any required fields
     }
 
     /**
-     * Constructs a <code>AdgroupCreateBody</code> from a plain JavaScript object, optionally creating a new instance.
-     * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-     * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/AdgroupCreateBody} obj Optional instance to populate.
-     * @return {module:model/AdgroupCreateBody} The populated <code>AdgroupCreateBody</code> instance.
+     * Returns an instance of AdgroupCreateBody populated with the given data
      */
-    static constructFromObject(data: Record<string, any>, obj?: AdgroupCreateBody): AdgroupCreateBody {
-        if (!data) {
-            throw new Error("Data cannot be null");
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
+
+        if (typedData['actions'] !== undefined) {
+            this['actions'] = ApiClient.convertToType(typedData['actions'], AdgroupcreateActions) as AdgroupcreateActions;
+        }
+        if (typedData['adgroupName'] !== undefined) {
+            this['adgroupName'] = ApiClient.convertToType(typedData['adgroupName'], 'String') as string;
+        }
+        if (typedData['advertiserId'] !== undefined) {
+            this['advertiserId'] = ApiClient.convertToType(typedData['advertiserId'], 'String') as string;
+        }
+        if (typedData['ageGroups'] !== undefined) {
+            this['ageGroups'] = ApiClient.convertToType(
+                typedData['ageGroups'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['androidOsv'] !== undefined) {
+            this['androidOsv'] = ApiClient.convertToType(typedData['androidOsv'], 'String') as string;
+        }
+        if (typedData['appId'] !== undefined) {
+            this['appId'] = ApiClient.convertToType(typedData['appId'], 'String') as string;
+        }
+        if (typedData['audienceIds'] !== undefined) {
+            this['audienceIds'] = ApiClient.convertToType(
+                typedData['audienceIds'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['audienceRule'] !== undefined) {
+            this['audienceRule'] = ApiClient.convertToType(typedData['audienceRule'], 'String') as string;
+        }
+        if (typedData['audienceRuleExclusions'] !== undefined) {
+            this['audienceRuleExclusions'] = ApiClient.convertToType(
+                typedData['audienceRuleExclusions'],
+                AdgroupcreateAudienceRuleExclusions
+            ) as AdgroupcreateAudienceRuleExclusions;
+        }
+        if (typedData['audienceRuleInclusions'] !== undefined) {
+            this['audienceRuleInclusions'] = ApiClient.convertToType(
+                typedData['audienceRuleInclusions'],
+                AdgroupcreateAudienceRuleInclusions
+            ) as AdgroupcreateAudienceRuleInclusions;
+        }
+        if (typedData['audienceType'] !== undefined) {
+            this['audienceType'] = ApiClient.convertToType(typedData['audienceType'], 'String') as string;
+        }
+        if (typedData['autoTargetingEnabled'] !== undefined) {
+            this['autoTargetingEnabled'] = ApiClient.convertToType(typedData['autoTargetingEnabled'], 'String') as string;
+        }
+        if (typedData['billingEvent'] !== undefined) {
+            this['billingEvent'] = ApiClient.convertToType(typedData['billingEvent'], 'String') as string;
+        }
+        if (typedData['billingSpec'] !== undefined) {
+            this['billingSpec'] = ApiClient.convertToType(typedData['billingSpec'], 'String') as string;
+        }
+        if (typedData['blockedPangleAppIds'] !== undefined) {
+            this['blockedPangleAppIds'] = ApiClient.convertToType(
+                typedData['blockedPangleAppIds'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['brandSafetyType'] !== undefined) {
+            this['brandSafetyType'] = ApiClient.convertToType(typedData['brandSafetyType'], 'String') as string;
+        }
+        if (typedData['budgetOptimizeOn'] !== undefined) {
+            this['budgetOptimizeOn'] = ApiClient.convertToType(typedData['budgetOptimizeOn'], 'String') as string;
+        }
+        if (typedData['campaignId'] !== undefined) {
+            this['campaignId'] = ApiClient.convertToType(typedData['campaignId'], 'String') as string;
+        }
+        if (typedData['carrierIds'] !== undefined) {
+            this['carrierIds'] = ApiClient.convertToType(
+                typedData['carrierIds'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['catalogAuthorized'] !== undefined) {
+            this['catalogAuthorized'] = ApiClient.convertToType(typedData['catalogAuthorized'], 'String') as string;
+        }
+        if (typedData['catalogId'] !== undefined) {
+            this['catalogId'] = ApiClient.convertToType(typedData['catalogId'], 'String') as string;
+        }
+        if (typedData['comments'] !== undefined) {
+            this['comments'] = ApiClient.convertToType(typedData['comments'], 'String') as string;
+        }
+        if (typedData['contextualTagIds'] !== undefined) {
+            this['contextualTagIds'] = ApiClient.convertToType(
+                typedData['contextualTagIds'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['conversionBid'] !== undefined) {
+            this['conversionBid'] = ApiClient.convertToType(typedData['conversionBid'], 'String') as string;
+        }
+        if (typedData['conversionId'] !== undefined) {
+            this['conversionId'] = ApiClient.convertToType(typedData['conversionId'], 'String') as string;
+        }
+        if (typedData['creativeMaterialMode'] !== undefined) {
+            this['creativeMaterialMode'] = ApiClient.convertToType(typedData['creativeMaterialMode'], 'String') as string;
+        }
+        if (typedData['dayparting'] !== undefined) {
+            this['dayparting'] = ApiClient.convertToType(typedData['dayparting'], 'String') as string;
+        }
+        if (typedData['deviceModelIds'] !== undefined) {
+            this['deviceModelIds'] = ApiClient.convertToType(
+                typedData['deviceModelIds'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['devicePriceRanges'] !== undefined) {
+            this['devicePriceRanges'] = ApiClient.convertToType(
+                typedData['devicePriceRanges'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['excludedAudienceIds'] !== undefined) {
+            this['excludedAudienceIds'] = ApiClient.convertToType(
+                typedData['excludedAudienceIds'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['excludedCustomActions'] !== undefined) {
+            this['excludedCustomActions'] = ApiClient.convertToType(
+                typedData['excludedCustomActions'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['excludedPangleAudiencePackageIds'] !== undefined) {
+            this['excludedPangleAudiencePackageIds'] = ApiClient.convertToType(
+                typedData['excludedPangleAudiencePackageIds'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['frequency'] !== undefined) {
+            this['frequency'] = ApiClient.convertToType(typedData['frequency'], 'String') as string;
+        }
+        if (typedData['frequencySchedule'] !== undefined) {
+            this['frequencySchedule'] = ApiClient.convertToType(typedData['frequencySchedule'], 'String') as string;
+        }
+        if (typedData['gender'] !== undefined) {
+            this['gender'] = ApiClient.convertToType(typedData['gender'], 'String') as string;
+        }
+        if (typedData['householdIncome'] !== undefined) {
+            this['householdIncome'] = ApiClient.convertToType(
+                typedData['householdIncome'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['identityAuthorizedBcId'] !== undefined) {
+            this['identityAuthorizedBcId'] = ApiClient.convertToType(typedData['identityAuthorizedBcId'], 'String') as string;
+        }
+        if (typedData['identityId'] !== undefined) {
+            this['identityId'] = ApiClient.convertToType(typedData['identityId'], 'String') as string;
+        }
+        if (typedData['identityType'] !== undefined) {
+            this['identityType'] = ApiClient.convertToType(typedData['identityType'], 'String') as string;
+        }
+        if (typedData['interestCategoryIds'] !== undefined) {
+            this['interestCategoryIds'] = ApiClient.convertToType(
+                typedData['interestCategoryIds'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['interestKeywordIds'] !== undefined) {
+            this['interestKeywordIds'] = ApiClient.convertToType(
+                typedData['interestKeywordIds'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['interestKeywords'] !== undefined) {
+            this['interestKeywords'] = ApiClient.convertToType(
+                typedData['interestKeywords'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['internetStatus'] !== undefined) {
+            this['internetStatus'] = ApiClient.convertToType(
+                typedData['internetStatus'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['ios14Targeting'] !== undefined) {
+            this['ios14Targeting'] = ApiClient.convertToType(typedData['ios14Targeting'], 'String') as string;
+        }
+        if (typedData['iosOsv'] !== undefined) {
+            this['iosOsv'] = ApiClient.convertToType(typedData['iosOsv'], 'String') as string;
+        }
+        if (typedData['isHfss'] !== undefined) {
+            this['isHfss'] = ApiClient.convertToType(typedData['isHfss'], 'String') as string;
+        }
+        if (typedData['languageIds'] !== undefined) {
+            this['languageIds'] = ApiClient.convertToType(
+                typedData['languageIds'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['locationIds'] !== undefined) {
+            this['locationIds'] = ApiClient.convertToType(
+                typedData['locationIds'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['minAndroidVersion'] !== undefined) {
+            this['minAndroidVersion'] = ApiClient.convertToType(typedData['minAndroidVersion'], 'String') as string;
+        }
+        if (typedData['minIosVersion'] !== undefined) {
+            this['minIosVersion'] = ApiClient.convertToType(typedData['minIosVersion'], 'String') as string;
+        }
+        if (typedData['networkTypes'] !== undefined) {
+            this['networkTypes'] = ApiClient.convertToType(
+                typedData['networkTypes'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['nextDayRetention'] !== undefined) {
+            this['nextDayRetention'] = ApiClient.convertToType(typedData['nextDayRetention'], 'String') as string;
+        }
+        if (typedData['operatingSystem'] !== undefined) {
+            this['operatingSystem'] = ApiClient.convertToType(
+                typedData['operatingSystem'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['operationSpec'] !== undefined) {
+            this['operationSpec'] = ApiClient.convertToType(typedData['operationSpec'], 'String') as string;
+        }
+        if (typedData['optimizationEvent'] !== undefined) {
+            this['optimizationEvent'] = ApiClient.convertToType(typedData['optimizationEvent'], 'String') as string;
+        }
+        if (typedData['optimizationGoal'] !== undefined) {
+            this['optimizationGoal'] = ApiClient.convertToType(typedData['optimizationGoal'], 'String') as string;
+        }
+        if (typedData['pacing'] !== undefined) {
+            this['pacing'] = ApiClient.convertToType(typedData['pacing'], 'String') as string;
+        }
+        if (typedData['pixelId'] !== undefined) {
+            this['pixelId'] = ApiClient.convertToType(typedData['pixelId'], 'String') as string;
+        }
+        if (typedData['placementIds'] !== undefined) {
+            this['placementIds'] = ApiClient.convertToType(
+                typedData['placementIds'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['placementType'] !== undefined) {
+            this['placementType'] = ApiClient.convertToType(typedData['placementType'], 'String') as string;
+        }
+        if (typedData['productSource'] !== undefined) {
+            this['productSource'] = ApiClient.convertToType(typedData['productSource'], 'String') as string;
+        }
+        if (typedData['promotedObjectId'] !== undefined) {
+            this['promotedObjectId'] = ApiClient.convertToType(typedData['promotedObjectId'], 'String') as string;
+        }
+        if (typedData['promotedObjectType'] !== undefined) {
+            this['promotedObjectType'] = ApiClient.convertToType(typedData['promotedObjectType'], 'String') as string;
+        }
+        if (typedData['purchaseIntentionKeywordIds'] !== undefined) {
+            this['purchaseIntentionKeywordIds'] = ApiClient.convertToType(
+                typedData['purchaseIntentionKeywordIds'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['roasBid'] !== undefined) {
+            this['roasBid'] = ApiClient.convertToType(typedData['roasBid'], 'String') as string;
+        }
+        if (typedData['schedule'] !== undefined) {
+            this['schedule'] = ApiClient.convertToType(typedData['schedule'], 'String') as string;
+        }
+        if (typedData['shoppingAds'] !== undefined) {
+            this['shoppingAds'] = ApiClient.convertToType(typedData['shoppingAds'], 'String') as string;
+        }
+        if (typedData['targetingExpansion'] !== undefined) {
+            this['targetingExpansion'] = ApiClient.convertToType(typedData['targetingExpansion'], 'String') as string;
         }
 
-        const adgroup_name = ApiClient.convertToType(data['adgroup_name'], 'String');
-        const advertiser_id = ApiClient.convertToType(data['advertiser_id'], 'String');
-        const billing_event = ApiClient.convertToType(data['billing_event'], 'String');
-        const campaign_id = ApiClient.convertToType(data['campaign_id'], 'String');
-        const location_ids = ApiClient.convertToType(data['location_ids'], ['String']);
-        const schedule_start_time = ApiClient.convertToType(data['schedule_start_time'], 'String');
-        const schedule_type = ApiClient.convertToType(data['schedule_type'], 'String');
+        return this;
+    }
 
-        if (!obj) {
-            obj = new AdgroupCreateBody(
-                adgroup_name,
-                advertiser_id,
-                billing_event,
-                campaign_id,
-                location_ids,
-                schedule_start_time,
-                schedule_type
-            );
-        }
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): AdgroupCreateBody {
+        const instance = new AdgroupCreateBody();
+        return instance.constructFromObject(data);
+    }
 
-        if (data.hasOwnProperty('actions')) {
-            obj.actions = AdgroupcreateActions.constructFromObject(data['actions'], new AdgroupcreateActions());
-        }
-        if (data.hasOwnProperty('audience_rule')) {
-            obj.audience_rule = AdgroupcreateAudienceRule.constructFromObject(data['audience_rule'], new AdgroupcreateAudienceRule());
-        }
-        if (data.hasOwnProperty('excluded_custom_actions')) {
-            obj.excluded_custom_actions = AdgroupcreateExcludedCustomActions.constructFromObject(data['excluded_custom_actions'], new AdgroupcreateExcludedCustomActions());
-        }
-        if (data.hasOwnProperty('included_custom_actions')) {
-            obj.included_custom_actions = AdgroupcreateIncludedCustomActions.constructFromObject(data['included_custom_actions'], new AdgroupcreateIncludedCustomActions());
-        }
-        if (data.hasOwnProperty('targeting_expansion')) {
-            obj.targeting_expansion = AdgroupcreateTargetingExpansion.constructFromObject(data['targeting_expansion'], new AdgroupcreateTargetingExpansion());
-        }
-
-        // Copy all other primitive type properties
-        const primitiveProps = [
-            'adgroup_app_profile_page_state', 'age_groups', 'app_id', 'audience_ids',
-            'audience_type', 'auto_targeting_enabled', 'bid_display_mode', 'bid_price',
-            'bid_type', 'blocked_pangle_app_ids', 'brand_safety_partner', 'brand_safety_type',
-            'budget', 'budget_mode', 'budget_optmize_on', 'carrier_ids',
-            'catalog_authorized_bc_id', 'catalog_id', 'comment_disabled', 'contextual_tag_ids',
-            'conversion_bid_price', 'conversion_id', 'creative_material_mode', 'dayparting',
-            'deep_bid_type', 'deep_cpa_bid', 'device_model_ids', 'device_price_ranges',
-            'excluded_audience_ids', 'excluded_pangle_audience_package_ids', 'frequency',
-            'frequency_schedule', 'gender', 'household_income', 'identity_authorized_bc_id',
-            'identity_id', 'identity_type', 'included_pangle_audience_package_ids',
-            'interest_category_ids', 'interest_keyword_ids', 'interest_keywords',
-            'ios14_targeting', 'is_hfss', 'languages', 'min_android_version',
-            'min_ios_version', 'network_types', 'next_day_retention', 'operating_systems',
-            'operation_status', 'optimization_event', 'optimization_goal', 'pacing',
-            'pixel_id', 'placement_type', 'placements', 'product_set_id', 'product_source',
-            'promotion_type', 'promotion_website_type', 'purchase_intention_keyword_ids',
-            'request_id', 'roas_bid', 'schedule_end_time', 'secondary_optimization_event',
-            'shopping_ads_retargeting_actions_days', 'shopping_ads_retargeting_type',
-            'shopping_ads_type', 'skip_learning_phase', 'spending_power', 'statistic_type',
-            'store_authorized_bc_id', 'store_id', 'video_download_disabled'
-        ];
-
-        for (const prop of primitiveProps) {
-            if (data.hasOwnProperty(prop)) {
-                obj[prop] = ApiClient.convertToType(data[prop], typeof data[prop]);
-            }
-        }
-
-        return obj;
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AdgroupCreateBody {
+        return AdgroupCreateBody.fromObject(data);
     }
 }
-

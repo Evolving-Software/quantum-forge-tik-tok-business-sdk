@@ -5,12 +5,15 @@
  * the LICENSE file in the root directory of this source tree.
  */
 import ApiClient from '../ApiClient';
+// Import the missing type for the array items
+import {DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetFilterSetParameterFilters} from './DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetFilterSetParameterFilters';
 
 interface FilterSetFiltersProps {
   field: string | undefined;
   operator: string | undefined;
   value: string | undefined;
-  parameter_filters: any[] | undefined;
+  // Correct the type definition for parameter_filters
+  parameter_filters: DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetFilterSetParameterFilters[] | undefined;
 }
 
 /**
@@ -22,7 +25,8 @@ export class DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetFilterSetFilters
   field: string | undefined;
   operator: string | undefined;
   value: string | undefined;
-  parameter_filters: any[] | undefined;
+  // Correct the type definition for parameter_filters
+  parameter_filters: DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetFilterSetParameterFilters[] | undefined;
 
   /**
    * Constructs a new <code>DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetFilterSetFilters</code>.
@@ -51,7 +55,10 @@ export class DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetFilterSetFilters
     if (data.hasOwnProperty('value'))
       obj.value = ApiClient.convertToType(data['value'], 'String');
     if (data.hasOwnProperty('parameter_filters'))
-      obj.parameter_filters = ApiClient.convertToType(data['parameter_filters'], [Object]);
+      // Manual array mapping using the model's static method (now that the type is imported)
+      obj.parameter_filters = Array.isArray(data['parameter_filters']) 
+        ? data['parameter_filters'].map((item: any) => DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetFilterSetParameterFilters.constructFromObject(item)) 
+        : undefined;
 
     return obj;
   }

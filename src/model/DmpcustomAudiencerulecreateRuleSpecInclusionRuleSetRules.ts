@@ -42,7 +42,8 @@ export class DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetRules {
       if (data.hasOwnProperty('event_source_ids'))
         obj.event_source_ids = ApiClient.convertToType(data['event_source_ids'], ['String']);
       if (data.hasOwnProperty('filter_set'))
-        obj.filter_set = ApiClient.convertToType(data['filter_set'], DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetFilterSet);
+        // Call static method directly for nested object construction
+        obj.filter_set = DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetFilterSet.constructFromObject(data['filter_set']);
       if (data.hasOwnProperty('retention_days'))
         obj.retention_days = ApiClient.convertToType(data['retention_days'], 'Number');
     }

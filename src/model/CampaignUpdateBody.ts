@@ -5,6 +5,37 @@
  * the LICENSE file in the root directory of this source tree.
  */
 import ApiClient from '../ApiClient';
+import type { Campaign } from './Campaign';
+
+/**
+ * Properties for updating a campaign
+ */
+export interface CampaignUpdateBodyProps {
+    /**
+     * Required. Campaign ID to update
+     */
+    campaign_id: string;
+    
+    /**
+     * Optional. New campaign name with max 100 characters
+     */
+    campaign_name?: string;
+    
+    /**
+     * Optional. Campaign budget in advertiser's currency
+     */
+    budget?: number;
+    
+    /**
+     * Required if budget is set. Budget type
+     */
+    budget_mode?: Campaign['budget_mode'];
+    
+    /**
+     * Optional. Budget optimization switch
+     */
+    budget_optimize_on?: boolean;
+}
 
 /**
  * The CampaignUpdateBody model module.

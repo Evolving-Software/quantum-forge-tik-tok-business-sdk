@@ -1,43 +1,45 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
+import { ApiClient } from "../ApiClient";
+import type { ModelBase } from "../types";
 
 /**
- * The AdAcoBodyCallToActionList model module.
- * @module model/AdAcoBodyCallToActionList
- * @version 0.1.4
+ * The AdAcoBodyCallToActionList model.
  */
-export class AdAcoBodyCallToActionList {
-  /**
-   * Call-to-action text
-   */
-  call_to_action?: string | undefined;
+export class AdAcoBodyCallToActionList implements ModelBase {
+    'callToAction'?: string;
+    'language'?: string;
 
-  /**
-   * Constructs a new <code>AdAcoBodyCallToActionList</code>.
-   * @alias module:model/AdAcoBodyCallToActionList
-   * @class
-   */
-  constructor() {}
-
-  /**
-   * Constructs a <code>AdAcoBodyCallToActionList</code> from a plain JavaScript object, optionally creating a new instance.
-   * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-   * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/AdAcoBodyCallToActionList} obj Optional instance to populate.
-   * @return {module:model/AdAcoBodyCallToActionList} The populated <code>AdAcoBodyCallToActionList</code> instance.
-   */
-  static constructFromObject(data: Record<string, any>, obj?: AdAcoBodyCallToActionList): AdAcoBodyCallToActionList {
-    const instance = obj || new AdAcoBodyCallToActionList();
-    
-    if (data && data.hasOwnProperty('call_to_action')) {
-      instance.call_to_action = data['call_to_action'];
+    constructor() {
+        // Initialize any required fields
     }
-    
-    return instance;
-  }
-}
 
+    /**
+     * Returns an instance of AdAcoBodyCallToActionList populated with the given data
+     */
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
+
+        if (typedData['callToAction'] !== undefined) {
+            this['callToAction'] = ApiClient.convertToType(typedData['callToAction'], 'String') as string;
+        }
+        if (typedData['language'] !== undefined) {
+            this['language'] = ApiClient.convertToType(typedData['language'], 'String') as string;
+        }
+
+        return this;
+    }
+
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): AdAcoBodyCallToActionList {
+        const instance = new AdAcoBodyCallToActionList();
+        return instance.constructFromObject(data);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AdAcoBodyCallToActionList {
+        return AdAcoBodyCallToActionList.fromObject(data);
+    }
+}

@@ -1,41 +1,49 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
-import ApiClient from '../ApiClient';
+import { ApiClient } from "../ApiClient";
+import type { ModelBase } from "../types";
 
 /**
- * The AdcreateDisclaimerClickableTexts model module.
- * @module model/AdcreateDisclaimerClickableTexts
- * @version 0.1.4
+ * The AdcreateDisclaimerClickableTexts model.
  */
-export class AdcreateDisclaimerClickableTexts {
-    /** @type {string} */
-    text?: string;
-    /** @type {string} */
-    url?: string;
+export class AdcreateDisclaimerClickableTexts implements ModelBase {
+    'clickableTexts'?: string;
+    'disclaimer'?: string;
+    'language'?: string;
+
+    constructor() {
+        // Initialize any required fields
+    }
 
     /**
-     * Constructs a new <code>AdcreateDisclaimerClickableTexts</code> from a plain JavaScript object
-     * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/AdcreateDisclaimerClickableTexts} obj Optional instance to populate.
-     * @return {module:model/AdcreateDisclaimerClickableTexts} The populated instance.
+     * Returns an instance of AdcreateDisclaimerClickableTexts populated with the given data
      */
-    static constructFromObject(data: any, obj?: AdcreateDisclaimerClickableTexts): AdcreateDisclaimerClickableTexts {
-        if (!data) return new AdcreateDisclaimerClickableTexts();
-        
-        obj = obj || new AdcreateDisclaimerClickableTexts();
-        
-        if (data.hasOwnProperty('text')) {
-            obj.text = ApiClient.convertToType(data['text'], 'String');
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
+
+        if (typedData['clickableTexts'] !== undefined) {
+            this['clickableTexts'] = ApiClient.convertToType(typedData['clickableTexts'], 'String') as string;
         }
-        if (data.hasOwnProperty('url')) {
-            obj.url = ApiClient.convertToType(data['url'], 'String');
+        if (typedData['disclaimer'] !== undefined) {
+            this['disclaimer'] = ApiClient.convertToType(typedData['disclaimer'], 'String') as string;
+        }
+        if (typedData['language'] !== undefined) {
+            this['language'] = ApiClient.convertToType(typedData['language'], 'String') as string;
         }
 
-        return obj;
+        return this;
+    }
+
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): AdcreateDisclaimerClickableTexts {
+        const instance = new AdcreateDisclaimerClickableTexts();
+        return instance.constructFromObject(data);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AdcreateDisclaimerClickableTexts {
+        return AdcreateDisclaimerClickableTexts.fromObject(data);
     }
 }
-

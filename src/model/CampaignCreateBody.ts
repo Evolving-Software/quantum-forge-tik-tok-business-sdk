@@ -5,6 +5,37 @@
  * the LICENSE file in the root directory of this source tree.
  */
 import ApiClient from '../ApiClient';
+import type { Campaign } from './Campaign';
+
+/**
+ * Properties for creating a campaign
+ */
+export interface CampaignCreateBodyProps {
+    /**
+     * Required. Advertising objective
+     */
+    objective: Campaign['objective'];
+    
+    /**
+     * Required. Campaign name with max 100 characters
+     */
+    campaign_name: string;
+    
+    /**
+     * Optional. Campaign budget in advertiser's currency
+     */
+    budget?: number;
+    
+    /**
+     * Required if budget is set. Budget type
+     */
+    budget_mode?: Campaign['budget_mode'];
+    
+    /**
+     * Optional. Budget optimization switch
+     */
+    budget_optimize_on?: boolean;
+}
 
 /**
  * The CampaignCreateBody model module.

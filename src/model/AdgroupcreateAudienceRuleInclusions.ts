@@ -1,48 +1,49 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
-import ApiClient from '../ApiClient';
-import {AdgroupcreateAudienceRuleExclusionsRules} from './AdgroupcreateAudienceRuleExclusionsRules';
+import { ApiClient } from "../ApiClient";
+import { type ModelBase, createArraySpec } from "../types";
+import { AdgroupcreateAudienceRuleExclusionsRules } from "./AdgroupcreateAudienceRuleExclusionsRules";
 
 /**
- * The AdgroupcreateAudienceRuleInclusions model module.
- * @module model/AdgroupcreateAudienceRuleInclusions
- * @version 0.1.4
+ * The AdgroupcreateAudienceRuleInclusions model.
  */
-export class AdgroupcreateAudienceRuleInclusions {
-  operator?: string | undefined;
-  rules?: AdgroupcreateAudienceRuleExclusionsRules[] | undefined;
+export class AdgroupcreateAudienceRuleInclusions implements ModelBase {
+    'operator'?: string;
+    'rules'?: AdgroupcreateAudienceRuleExclusionsRules[];
 
-  /**
-   * Constructs a new <code>AdgroupcreateAudienceRuleInclusions</code>.
-   * A set of inclusion rule object. Quantity range- 1 to 5, without repetition. For the format, see the \&quot;Rule set format\&quot; section below [Audience Rule]((https://ads.tiktok.com/marketing_api/docs?id&#x3D;1739566532187138)).
-   * @alias module:model/AdgroupcreateAudienceRuleInclusions
-   * @class
-   */
-  constructor() {
-    this.operator = undefined;
-    this.rules = undefined;
-  }
-
-  /**
-   * Constructs a <code>AdgroupcreateAudienceRuleInclusions</code> from a plain JavaScript object, optionally creating a new instance.
-   * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-   * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/AdgroupcreateAudienceRuleInclusions} obj Optional instance to populate.
-   * @return {module:model/AdgroupcreateAudienceRuleInclusions} The populated <code>AdgroupcreateAudienceRuleInclusions</code> instance.
-   */
-  static constructFromObject(data: any, obj?: AdgroupcreateAudienceRuleInclusions): AdgroupcreateAudienceRuleInclusions {
-    if (data) {
-      obj = obj || new AdgroupcreateAudienceRuleInclusions();
-      if (data.hasOwnProperty('operator'))
-        obj.operator = ApiClient.convertToType(data['operator'], 'String');
-      if (data.hasOwnProperty('rules'))
-        obj.rules = ApiClient.convertToType(data['rules'], [AdgroupcreateAudienceRuleExclusionsRules]);
+    constructor() {
+        // Initialize any required fields
     }
-    return obj || new AdgroupcreateAudienceRuleInclusions();
-  }
-}
 
+    /**
+     * Returns an instance of AdgroupcreateAudienceRuleInclusions populated with the given data
+     */
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
+
+        if (typedData['operator'] !== undefined) {
+            this['operator'] = ApiClient.convertToType(typedData['operator'], 'String') as string;
+        }
+        if (typedData['rules'] !== undefined) {
+            this['rules'] = ApiClient.convertToType(
+                typedData['rules'],
+                createArraySpec(AdgroupcreateAudienceRuleExclusionsRules)
+            ) as AdgroupcreateAudienceRuleExclusionsRules[];
+        }
+
+        return this;
+    }
+
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): AdgroupcreateAudienceRuleInclusions {
+        const instance = new AdgroupcreateAudienceRuleInclusions();
+        return instance.constructFromObject(data);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AdgroupcreateAudienceRuleInclusions {
+        return AdgroupcreateAudienceRuleInclusions.fromObject(data);
+    }
+}

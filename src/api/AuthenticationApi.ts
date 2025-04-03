@@ -4,8 +4,10 @@
  * This source code is licensed under the MIT license found in
  * the LICENSE file in the root directory of this source tree.
  */
+import { ApiClientInterface } from "@/types";
 import ApiClient from "../ApiClient";
-import {InlineResponse200} from '../model/InlineResponse200';
+import { InlineResponse200 } from '../model/InlineResponse200';
+import ApiClientInstance from "../ApiClient"; // Renamed default import for clarity
 
 /**
 * Authentication service.
@@ -13,16 +15,17 @@ import {InlineResponse200} from '../model/InlineResponse200';
 * @version 0.1.4
 */
 export class AuthenticationApi {
-  private apiClient: ApiClient;
+  private apiClient: ApiClientInterface;
 
-  constructor(apiClient?: ApiClient) {
-    this.apiClient = apiClient || ApiClient.instance;
+  constructor(apiClient?: ApiClientInterface) {
+    this.apiClient = apiClient || ApiClientInstance;
   }
+
 
   /**
    * Get the access token by auth code. [Access token](https://ads.tiktok.com/marketing_api/docs?id&#x3D;1738373164380162)
    */
-  getAccessToken(app_id: string, secret: string, auth_code: string, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  getAccessToken(app_id: string, secret: string, auth_code: string, callback?: (error: Error | null, data?: InlineResponse200, response?: Response) => void) {
     if (!app_id || !secret || !auth_code) {
       throw new Error("Missing required parameters");
     }
@@ -44,8 +47,8 @@ export class AuthenticationApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/oauth2/access_token/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
-      authNames, contentTypes, accepts, returnType, callback
+      pathParams, queryParams, headerParams, formParams, postBody, // Cast callback type for compatibility
+      authNames, contentTypes, accepts, returnType, callback as any // TODO: Improve ApiClient type to avoid cast
     );
   }
 
@@ -64,9 +67,9 @@ export class AuthenticationApi {
    * @param {String} Access_Token Authorized access token. For details, see [Authentication](https://ads.tiktok.com/marketing_api/docs?id&#x3D;1738373164380162).
    * @param {module:api/AuthenticationApi~oauth2AdvertiserGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
-   */
+   */ // TODO: This JSDoc seems outdated or incorrect based on the TS signature
   oauth2AdvertiserGet(app_id: string, secret: string, Access_Token: string, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
-    
+
     const postBody = null;
     // verify the required parameter 'app_id' is set
     if (app_id === undefined || app_id === null) {
@@ -83,7 +86,7 @@ export class AuthenticationApi {
 
     const pathParams: Record<string, string> = {};
     const queryParams: Record<string, any> = {
-      'app_id': app_id,'secret': secret
+      'app_id': app_id, 'secret': secret
     };
     const headerParams: Record<string, string> = {
       'Access-Token': Access_Token
@@ -98,8 +101,9 @@ export class AuthenticationApi {
     return this.apiClient.callApi(
       '/open_api/v1.3/oauth2/advertiser/get/', 'GET',
       pathParams, queryParams, headerParams, formParams, postBody,
-      authNames, contentTypes, accepts, returnType, callback
+      authNames, contentTypes, accepts, returnType, callback as any // Cast maintained here as well
     );
   }
 
 }
+// Removed extra closing brace

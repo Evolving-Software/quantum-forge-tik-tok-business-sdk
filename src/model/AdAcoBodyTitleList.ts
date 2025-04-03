@@ -1,43 +1,45 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
+import { ApiClient } from "../ApiClient";
+import type { ModelBase } from "../types";
 
 /**
- * The AdAcoBodyTitleList model module.
- * @module model/AdAcoBodyTitleList
- * @version 0.1.4
+ * The AdAcoBodyTitleList model.
  */
-export class AdAcoBodyTitleList {
-  /**
-   * Ad title text
-   */
-  title?: string | undefined;
+export class AdAcoBodyTitleList implements ModelBase {
+    'title'?: string;
+    'language'?: string;
 
-  /**
-   * Constructs a new <code>AdAcoBodyTitleList</code>.
-   * @alias module:model/AdAcoBodyTitleList
-   * @class
-   */
-  constructor() {}
-
-  /**
-   * Constructs a <code>AdAcoBodyTitleList</code> from a plain JavaScript object, optionally creating a new instance.
-   * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-   * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/AdAcoBodyTitleList} obj Optional instance to populate.
-   * @return {module:model/AdAcoBodyTitleList} The populated <code>AdAcoBodyTitleList</code> instance.
-   */
-  static constructFromObject(data: Record<string, any>, obj?: AdAcoBodyTitleList): AdAcoBodyTitleList {
-    const instance = obj || new AdAcoBodyTitleList();
-    
-    if (data && data.hasOwnProperty('title')) {
-      instance.title = data['title'];
+    constructor() {
+        // Initialize any required fields
     }
-    
-    return instance;
-  }
-}
 
+    /**
+     * Returns an instance of AdAcoBodyTitleList populated with the given data
+     */
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
+
+        if (typedData['title'] !== undefined) {
+            this['title'] = ApiClient.convertToType(typedData['title'], 'String') as string;
+        }
+        if (typedData['language'] !== undefined) {
+            this['language'] = ApiClient.convertToType(typedData['language'], 'String') as string;
+        }
+
+        return this;
+    }
+
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): AdAcoBodyTitleList {
+        const instance = new AdAcoBodyTitleList();
+        return instance.constructFromObject(data);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AdAcoBodyTitleList {
+        return AdAcoBodyTitleList.fromObject(data);
+    }
+}

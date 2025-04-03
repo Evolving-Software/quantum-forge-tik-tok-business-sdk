@@ -5,13 +5,14 @@
  * the LICENSE file in the root directory of this source tree.
  */
 import ApiClient from '../ApiClient';
+import type { ModelBase } from '../types';
 
 /**
  * The AdgroupStatusUpdateBody model module.
  * @module model/AdgroupStatusUpdateBody
  * @version 0.1.4
  */
-export class AdgroupStatusUpdateBody {
+export class AdgroupStatusUpdateBody implements ModelBase {
     /**
      * The ID of the ad group(s) to be operated. The allowed quantity range is `1-20`.
      * @type {string[]}
@@ -45,23 +46,34 @@ export class AdgroupStatusUpdateBody {
 
     /**
      * Constructs a <code>AdgroupStatusUpdateBody</code> from a plain JavaScript object.
-     * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/AdgroupStatusUpdateBody} obj Optional instance to populate.
+     * @param {Record<string, any>} data The plain JavaScript object bearing properties of interest.
      * @return {module:model/AdgroupStatusUpdateBody} The populated instance.
      */
-    static constructFromObject(data: any, obj?: AdgroupStatusUpdateBody): AdgroupStatusUpdateBody {
-        if (!data) return new AdgroupStatusUpdateBody([], "", "");
+    static fromObject(data: Record<string, any>): AdgroupStatusUpdateBody {
+        const adgroup_ids = data.hasOwnProperty('adgroup_ids') ? 
+            ApiClient.convertToType(data['adgroup_ids'], ['String']) as string[] : [];
+        const advertiser_id = data.hasOwnProperty('advertiser_id') ? 
+            ApiClient.convertToType(data['advertiser_id'], 'String') as string : "";
+        const operation_status = data.hasOwnProperty('operation_status') ? 
+            ApiClient.convertToType(data['operation_status'], 'String') as string : "";
         
-        obj = obj || new AdgroupStatusUpdateBody([], "", "");
-        
-        if (data.hasOwnProperty('adgroup_ids'))
-            obj.adgroup_ids = ApiClient.convertToType(data['adgroup_ids'], ['String']);
-        if (data.hasOwnProperty('advertiser_id'))
-            obj.advertiser_id = ApiClient.convertToType(data['advertiser_id'], 'String');
-        if (data.hasOwnProperty('operation_status'))
-            obj.operation_status = ApiClient.convertToType(data['operation_status'], 'String');
+        return new AdgroupStatusUpdateBody(adgroup_ids, advertiser_id, operation_status);
+    }
 
-        return obj;
+    /**
+     * Static method to construct an instance from object
+     */
+    static constructFromObject(data: unknown): AdgroupStatusUpdateBody {
+        return AdgroupStatusUpdateBody.fromObject(data as Record<string, any>);
+    }
+
+    /**
+     * Instance method to construct from object
+     */
+    constructFromObject(data: unknown): this {
+        const result = AdgroupStatusUpdateBody.fromObject(data as Record<string, any>);
+        Object.assign(this, result);
+        return this;
     }
 }
 

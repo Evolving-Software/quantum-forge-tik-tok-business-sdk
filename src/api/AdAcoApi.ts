@@ -4,11 +4,12 @@
  * This source code is licensed under the MIT license found in
  * the LICENSE file in the root directory of this source tree.
  */
+import type { ApiClientInterface, JsonValue } from "../types";
 import ApiClient from "../ApiClient";
-import {AdAcoBody} from '../model/AdAcoBody';
-import {AdAcoUpdateBody} from '../model/AdAcoUpdateBody';
+import type {AdAcoBody} from '../model/AdAcoBody';
+import type {AdAcoUpdateBody} from '../model/AdAcoUpdateBody';
 import {InlineResponse200} from '../model/InlineResponse200';
-import {MaterialStatusUpdateBody} from '../model/MaterialStatusUpdateBody';
+import type {MaterialStatusUpdateBody} from '../model/MaterialStatusUpdateBody';
 
 /**
 * AdAco service.
@@ -16,7 +17,7 @@ import {MaterialStatusUpdateBody} from '../model/MaterialStatusUpdateBody';
 * @version 0.1.4
 */
 export class AdAcoApi {
-  private apiClient: ApiClient;
+  private apiClient: ApiClientInterface;
 
   /**
    * Constructs a new AdAcoApi.
@@ -25,8 +26,8 @@ export class AdAcoApi {
    * @param {module:ApiClient} [apiClient] Optional API client implementation to use,
    * default to {@link module:ApiClient#instance} if unspecified.
    */
-  constructor(apiClient?: ApiClient) {
-    this.apiClient = apiClient || ApiClient.instance;
+  constructor(apiClient?: ApiClientInterface) {
+    this.apiClient = apiClient ?? ApiClient;
   }
 
   /**
@@ -34,9 +35,9 @@ export class AdAcoApi {
    * @param {String} Access_Token Authorized access token. For details, see [Authentication](https://ads.tiktok.com/marketing_api/docs?id&#x3D;1738373164380162).
    * @param {Object} opts Optional parameters
    * @param {module:model/AdAcoBody} opts.body AdAco parameters
-   */
-  adAcoCreate(Access_Token: string, opts: { body?: AdAcoBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
-    const postBody = opts['body'];
+ */
+  adAcoCreate(Access_Token: string, opts: { body?: AdAcoBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
+    const postBody = opts['body'] as JsonValue | undefined;
     if (Access_Token === undefined || Access_Token === null) {
       throw new Error("Missing the required parameter 'Access_Token' when calling adAcoCreate");
     }
@@ -70,7 +71,7 @@ export class AdAcoApi {
    * @param {module:api/AdAcoApi~adAcoGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  adAcoGet(advertiser_id: string, adgroup_ids: string[], Access_Token: string, opts: { exclude_field_types_in_response?: string[] } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  adAcoGet(advertiser_id: string, adgroup_ids: string[], Access_Token: string, opts: { exclude_field_types_in_response?: string[] } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     const postBody = null;
     if (advertiser_id === undefined || advertiser_id === null) {
       throw new Error("Missing the required parameter 'advertiser_id' when calling adAcoGet");
@@ -85,11 +86,11 @@ export class AdAcoApi {
     const pathParams: Record<string, string> = {};
     const queryParams: Record<string, any> = {
       'advertiser_id': advertiser_id,
-      'adgroup_ids': this.apiClient.buildCollectionParam(adgroup_ids, 'multi')
+      'adgroup_ids': adgroup_ids.join(',')
     };
 
     if (opts.exclude_field_types_in_response) {
-      queryParams['exclude_field_types_in_response'] = this.apiClient.buildCollectionParam(opts.exclude_field_types_in_response, 'multi');
+      queryParams['exclude_field_types_in_response'] = opts.exclude_field_types_in_response.join(',');
     }
 
     const headerParams: Record<string, string> = {
@@ -117,8 +118,8 @@ export class AdAcoApi {
    * @param {module:api/AdAcoApi~adAcoMaterialStatusUpdateCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  adAcoMaterialStatusUpdate(Access_Token: string, opts: { body?: MaterialStatusUpdateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
-    const postBody = opts['body'];
+  adAcoMaterialStatusUpdate(Access_Token: string, opts: { body?: MaterialStatusUpdateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
+    const postBody = opts['body'] as JsonValue | undefined;
     if (Access_Token === undefined || Access_Token === null) {
       throw new Error("Missing the required parameter 'Access_Token' when calling adAcoMaterialStatusUpdate");
     }
@@ -148,8 +149,8 @@ export class AdAcoApi {
    * @param {Object} opts Optional parameters
    * @param {module:model/AdAcoUpdateBody} opts.body AdAco parameters.
    */
-  adAcoUpdate(Access_Token: string, opts: { body?: AdAcoUpdateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
-    const postBody = opts['body'];
+  adAcoUpdate(Access_Token: string, opts: { body?: AdAcoUpdateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
+    const postBody = opts['body'] as JsonValue | undefined;
     if (Access_Token === undefined || Access_Token === null) {
       throw new Error("Missing the required parameter 'Access_Token' when calling adAcoUpdate");
     }

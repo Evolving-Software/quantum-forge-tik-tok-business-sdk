@@ -43,8 +43,8 @@ export class BcTransferBody {
             throw new Error("Data cannot be null");
         }
 
-        const bc_id = ApiClient.convertToType(data['bc_id'], 'String');
-        const transfer_type = ApiClient.convertToType(data['transfer_type'], 'String');
+        const bc_id = ApiClient.convertToType(data['bc_id'], 'String') as string;
+        const transfer_type = ApiClient.convertToType(data['transfer_type'], 'String') as string;
 
         if (!obj) {
             obj = new BcTransferBody(bc_id, transfer_type);

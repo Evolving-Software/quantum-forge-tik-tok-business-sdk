@@ -7,13 +7,14 @@
 import ApiClient from '../ApiClient';
 import {BcassetGroupcreateAssets} from './BcassetGroupcreateAssets';
 import {BcassetGroupcreateMembers} from './BcassetGroupcreateMembers';
+import type { ModelBase } from '../types';
 
 /**
  * The AssetGroupUpdateBody model module.
  * @module model/AssetGroupUpdateBody
  * @version 0.1.4
  */
-export class AssetGroupUpdateBody {
+export class AssetGroupUpdateBody implements ModelBase {
   /**
    * @member {String} action
    */
@@ -62,30 +63,50 @@ export class AssetGroupUpdateBody {
   }
 
   /**
-   * Constructs a AssetGroupUpdateBody from a plain JavaScript object, optionally creating a new instance.
-   * Copies all relevant properties from data to obj if supplied or a new instance if not.
+   * Constructs a AssetGroupUpdateBody from a plain JavaScript object.
+   * @param {Record<string, any>} data The plain JavaScript object bearing properties of interest.
+   * @return {AssetGroupUpdateBody} The populated instance.
    */
-  static constructFromObject(data: any, obj?: AssetGroupUpdateBody): AssetGroupUpdateBody {
+  static fromObject(data: Record<string, any>): AssetGroupUpdateBody {
     if (!data) {
       throw new Error('Data must be provided to construct AssetGroupUpdateBody');
     }
 
-    obj = obj || new AssetGroupUpdateBody(
-      data['asset_group_id'],
-      data['bc_id'],
-      data['update_entity']
-    );
+    const asset_group_id = ApiClient.convertToType(data['asset_group_id'], 'String') as string;
+    const bc_id = ApiClient.convertToType(data['bc_id'], 'String') as string;
+    const update_entity = ApiClient.convertToType(data['update_entity'], 'String') as string;
+
+    const instance = new AssetGroupUpdateBody(asset_group_id, bc_id, update_entity);
 
     if (data.hasOwnProperty('action'))
-      obj.action = ApiClient.convertToType(data['action'], 'String');
+      instance.action = ApiClient.convertToType(data['action'], 'String') as string;
     if (data.hasOwnProperty('asset_group_name'))
-      obj.asset_group_name = ApiClient.convertToType(data['asset_group_name'], 'String');
+      instance.asset_group_name = ApiClient.convertToType(data['asset_group_name'], 'String') as string;
     if (data.hasOwnProperty('assets'))
-      obj.assets = ApiClient.convertToType(data['assets'], [BcassetGroupcreateAssets]);
+      instance.assets = (data['assets'] as any[]).map(item => BcassetGroupcreateAssets.fromObject(item));
     if (data.hasOwnProperty('members'))
-      obj.members = ApiClient.convertToType(data['members'], [BcassetGroupcreateMembers]);
+      instance.members = (data['members'] as any[]).map(item => BcassetGroupcreateMembers.fromObject(item));
 
-    return obj;
+    return instance;
+  }
+
+  /**
+   * Static helper method to construct an instance from object data
+   */
+  static constructFromObject(data: unknown): AssetGroupUpdateBody {
+    return AssetGroupUpdateBody.fromObject(data as Record<string, any>);
+  }
+
+  /**
+   * Instance method to construct from object
+   */
+  constructFromObject(data: unknown): this {
+    const result = AssetGroupUpdateBody.fromObject(data as Record<string, any>);
+    Object.assign(this, result);
+    return this;
   }
 }
+
+// Export as a ModelStatic type
+export type { AssetGroupUpdateBody as ModelStatic };
 

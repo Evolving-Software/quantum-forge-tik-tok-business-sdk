@@ -4,8 +4,9 @@
  * This source code is licensed under the MIT license found in
  * the LICENSE file in the root directory of this source tree.
  */
-import ApiClient from "../ApiClient";
-import {InlineResponse200} from '../model/InlineResponse200';
+import ApiClient, { type ApiClient as ApiClientType } from "../ApiClient";
+import { type TypeInfo } from '../types';
+import { InlineResponse200 } from '../model/InlineResponse200';
 
 /**
 * Account service.
@@ -13,17 +14,17 @@ import {InlineResponse200} from '../model/InlineResponse200';
 * @version 0.1.4
 */
 export class AccountApi {
-  private apiClient: ApiClient;
+  private apiClient: ApiClientType;
 
   /**
    * Constructs a new AccountApi. 
    * @alias module:api/AccountApi
    * @class
-   * @param {module:ApiClient} [apiClient] Optional API client implementation to use,
+   * @param {ApiClientType} [apiClient] Optional API client implementation to use,
    * default to {@link module:ApiClient#instance} if unspecified.
    */
-  constructor(apiClient?: ApiClient) {
-    this.apiClient = apiClient || ApiClient.instance;
+  constructor(apiClient?: ApiClientType) {
+    this.apiClient = apiClient ?? ApiClient;
   }
 
   /**
@@ -42,7 +43,7 @@ export class AccountApi {
    * @param {module:api/AccountApi~advertiserUpdateCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  advertiserUpdate(Access_Token: string, opts: { body?: any } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  advertiserUpdate(Access_Token: string, opts: { body?: any } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
     if (Access_Token === undefined || Access_Token === null) {
@@ -59,7 +60,7 @@ export class AccountApi {
     let authNames: string[] = [];
     let contentTypes = ['application/json'];
     let accepts = ['application/json'];
-    let returnType = InlineResponse200;
+    let returnType: TypeInfo = InlineResponse200;
 
     return this.apiClient.callApi(
       '/open_api/v1.3/advertiser/update/', 'POST',

@@ -6,13 +6,14 @@
  */
 import ApiClient from '../ApiClient';
 import { AdcreateCreatives } from './AdcreateCreatives';
+import type { ModelBase } from '../types';
 
 /**
  * The AdCreateBody model module.
  * @module model/AdCreateBody
  * @version 0.1.4
  */
-export class AdCreateBody {
+export class AdCreateBody implements ModelBase {
     adgroup_id: string;
     advertiser_id: string;
     creatives: AdcreateCreatives;
@@ -33,28 +34,29 @@ export class AdCreateBody {
     /**
      * Constructs a <code>AdCreateBody</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-     * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/AdCreateBody} obj Optional instance to populate.
+     * @param {Record<string, any>} data The plain JavaScript object bearing properties of interest.
      * @return {module:model/AdCreateBody} The populated <code>AdCreateBody</code> instance.
      */
-    static constructFromObject(data: Record<string, any>, obj?: AdCreateBody): AdCreateBody {
+    static fromObject(data: Record<string, any>): AdCreateBody {
         if (!data) {
             throw new Error("Data cannot be null");
         }
 
-        const adgroup_id = ApiClient.convertToType(data['adgroup_id'], 'String');
-        const advertiser_id = ApiClient.convertToType(data['advertiser_id'], 'String');
-        const creatives = AdcreateCreatives.constructFromObject(data['creatives'], new AdcreateCreatives());
+        const adgroup_id = ApiClient.convertToType(data['adgroup_id'], 'String') as string;
+        const advertiser_id = ApiClient.convertToType(data['advertiser_id'], 'String') as string;
+        const creatives = AdcreateCreatives.fromObject(data['creatives']);
+        
+        return new AdCreateBody(adgroup_id, advertiser_id, creatives);
+    }
 
-        if (!obj) {
-            obj = new AdCreateBody(adgroup_id, advertiser_id, creatives);
-        } else {
-            obj.adgroup_id = adgroup_id;
-            obj.advertiser_id = advertiser_id;
-            obj.creatives = creatives;
-        }
+    static constructFromObject(data: unknown): AdCreateBody {
+        return AdCreateBody.fromObject(data as Record<string, any>);
+    }
 
-        return obj;
+    constructFromObject(data: unknown): this {
+        const result = AdCreateBody.fromObject(data as Record<string, any>);
+        Object.assign(this, result);
+        return this;
     }
 }
 

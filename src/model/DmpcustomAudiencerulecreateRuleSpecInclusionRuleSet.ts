@@ -7,6 +7,9 @@
 import ApiClient from '../ApiClient';
 import {DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetRules} from './DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetRules';
 
+// Explicitly import ModelStatic to potentially help type resolution
+import type { ModelStatic } from '../types'; // Path relative to src/model/
+
 /**
  * The DmpcustomAudiencerulecreateRuleSpecInclusionRuleSet model module.
  * @module model/DmpcustomAudiencerulecreateRuleSpecInclusionRuleSet
@@ -38,12 +41,16 @@ export class DmpcustomAudiencerulecreateRuleSpecInclusionRuleSet {
    */
   static constructFromObject(data: any, obj?: DmpcustomAudiencerulecreateRuleSpecInclusionRuleSet): DmpcustomAudiencerulecreateRuleSpecInclusionRuleSet {
     if (data) {
-      const operator = data.hasOwnProperty('operator') ? ApiClient.convertToType(data['operator'], 'String') : '';
+      // Ensure operator is always a string, defaulting to empty string if not present or null
+      const operator = data.hasOwnProperty('operator') && data['operator'] != null ? String(data['operator']) : '';
       const rules = data.hasOwnProperty('rules') 
-        ? ApiClient.convertToType(data['rules'], [DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetRules])
+        // Use ArraySpec format for model arrays
+        // Cast itemType to ModelStatic as a workaround for potential inference issues
+        ? ApiClient.convertToType(data['rules'], { type: 'array', itemType: DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetRules as ModelStatic }) 
         : [];
       
-      obj = obj || new DmpcustomAudiencerulecreateRuleSpecInclusionRuleSet(operator, rules);
+      // Ensure 'rules' is cast to the correct type for the constructor
+      obj = obj || new DmpcustomAudiencerulecreateRuleSpecInclusionRuleSet(operator, rules as DmpcustomAudiencerulecreateRuleSpecInclusionRuleSetRules[]);
     }
     return obj || new DmpcustomAudiencerulecreateRuleSpecInclusionRuleSet('', []);
   }

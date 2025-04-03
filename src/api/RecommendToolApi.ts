@@ -4,9 +4,16 @@
  * This source code is licensed under the MIT license found in
  * the LICENSE file in the root directory of this source tree.
  */
-import ApiClient from "../ApiClient";
+// Import the default instance and rename it for clarity
+import ApiClientInstance from "../ApiClient";
+// Import the interface type and relevant types
+import { ApiClientInterface, type QueryValue, type FormValue } from "@/types";
+// Import required model types
 import {InlineResponse200} from '../model/InlineResponse200';
-import {TargetingCategoryRecommendBody} from '../model/TargetingCategoryRecommendBody';
+import type {TargetingCategoryRecommendBody} from '../model/TargetingCategoryRecommendBody';
+
+// Define the callback type matching ApiClientInterface
+type Callback = (error: Error | null, data?: InlineResponse200, response?: Response) => void;
 
 /**
 * RecommendTool service.
@@ -14,7 +21,7 @@ import {TargetingCategoryRecommendBody} from '../model/TargetingCategoryRecommen
 * @version 0.1.4
 */
 export class RecommendToolApi {
-    private apiClient: ApiClient;
+    private apiClient: ApiClientInterface; // Use interface type
 
     /**
     * Constructs a new RecommendToolApi. 
@@ -23,8 +30,8 @@ export class RecommendToolApi {
     * @param {module:ApiClient} [apiClient] Optional API client implementation to use,
     * default to {@link module:ApiClient#instance} if unspecified.
     */
-    constructor(apiClient?: ApiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
+    constructor(apiClient?: ApiClientInterface) {
+        this.apiClient = apiClient || ApiClientInstance;
     }
 
     /**
@@ -49,8 +56,8 @@ export class RecommendToolApi {
             body?: TargetingCategoryRecommendBody;
         } = {}, 
         callback?: (error: string | null, data?: InlineResponse200, response?: any) => void
-    ) {
-        let postBody = opts['body'];
+    ): Promise<InlineResponse200> { // Add return type Promise<InlineResponse200>
+        const postBody = opts.body;
         // verify the required parameter 'Access_Token' is set
         if (Access_Token === undefined || Access_Token === null) {
             throw new Error("Missing the required parameter 'Access_Token' when calling toolTargetingCategoryRecommend");
@@ -61,7 +68,7 @@ export class RecommendToolApi {
         const headerParams: Record<string, string> = {
             'Access-Token': Access_Token
         };
-        const formParams: Record<string, any> = {};
+        const formParams: Record<string, FormValue> = {}; // Empty for JSON body
 
         const authNames: string[] = [];
         const contentTypes: string[] = ['application/json'];
@@ -70,8 +77,8 @@ export class RecommendToolApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/tool/targeting_category/recommend/', 'POST',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody as any, // Cast body
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 }

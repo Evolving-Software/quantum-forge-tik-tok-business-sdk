@@ -43,9 +43,9 @@ export class BillingGroupCreateBody {
             throw new Error("Data cannot be null");
         }
 
-        const advertiser_ids = ApiClient.convertToType(data['advertiser_ids'], ['String']);
-        const bc_id = ApiClient.convertToType(data['bc_id'], 'String');
-        const billing_group_name = ApiClient.convertToType(data['billing_group_name'], 'String');
+        const advertiser_ids = ApiClient.convertToType(data['advertiser_ids'], ['String']) as string[];
+        const bc_id = ApiClient.convertToType(data['bc_id'], 'String') as string;
+        const billing_group_name = ApiClient.convertToType(data['billing_group_name'], 'String') as string;
 
         if (!obj) {
             obj = new BillingGroupCreateBody(advertiser_ids, bc_id, billing_group_name);

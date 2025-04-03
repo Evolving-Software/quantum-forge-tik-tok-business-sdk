@@ -1,46 +1,45 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
+import { ApiClient } from "../ApiClient";
+import type { ModelBase } from "../types";
 
 /**
- * Interface for AdAcoBodyLandingPageUrls
+ * The AdAcoBodyLandingPageUrls model.
  */
-export interface IAdAcoBodyLandingPageUrls {
-  landing_page_url?: string;
-}
+export class AdAcoBodyLandingPageUrls implements ModelBase {
+    'landingPageUrl'?: string;
+    'language'?: string;
 
-/**
- * The AdAcoBodyLandingPageUrls model module.
- * @module model/AdAcoBodyLandingPageUrls
- * @version 0.1.4
- */
-export class AdAcoBodyLandingPageUrls implements IAdAcoBodyLandingPageUrls {
-  landing_page_url?: string;
-
-  /**
-   * Constructs a new <code>AdAcoBodyLandingPageUrls</code>.
-   * @alias module:model/AdAcoBodyLandingPageUrls
-   */
-  constructor() {}
-
-  /**
-   * Constructs a <code>AdAcoBodyLandingPageUrls</code> from a plain JavaScript object, optionally creating a new instance.
-   * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-   * @param {Partial<IAdAcoBodyLandingPageUrls>} data The plain JavaScript object bearing properties of interest.
-   * @param {AdAcoBodyLandingPageUrls} obj Optional instance to populate.
-   * @return {AdAcoBodyLandingPageUrls} The populated <code>AdAcoBodyLandingPageUrls</code> instance.
-   */
-  static constructFromObject(data: Partial<IAdAcoBodyLandingPageUrls>, obj?: AdAcoBodyLandingPageUrls): AdAcoBodyLandingPageUrls {
-    const instance = obj || new AdAcoBodyLandingPageUrls();
-    
-    if (data?.landing_page_url !== undefined) {
-      instance.landing_page_url = data.landing_page_url;
+    constructor() {
+        // Initialize any required fields
     }
-    
-    return instance;
-  }
-}
 
+    /**
+     * Returns an instance of AdAcoBodyLandingPageUrls populated with the given data
+     */
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
+
+        if (typedData['landingPageUrl'] !== undefined) {
+            this['landingPageUrl'] = ApiClient.convertToType(typedData['landingPageUrl'], 'String') as string;
+        }
+        if (typedData['language'] !== undefined) {
+            this['language'] = ApiClient.convertToType(typedData['language'], 'String') as string;
+        }
+
+        return this;
+    }
+
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): AdAcoBodyLandingPageUrls {
+        const instance = new AdAcoBodyLandingPageUrls();
+        return instance.constructFromObject(data);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AdAcoBodyLandingPageUrls {
+        return AdAcoBodyLandingPageUrls.fromObject(data);
+    }
+}

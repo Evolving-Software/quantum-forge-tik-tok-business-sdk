@@ -4,16 +4,20 @@
  * This source code is licensed under the MIT license found in
  * the LICENSE file in the root directory of this source tree.
  */
-import ApiClient from "../ApiClient";
-import {BcTransferBody} from '../model/BcTransferBody';
+// Import the default instance and rename it for clarity
+import ApiClientInstance from "../ApiClient";
+// Import the interface type
+import { ApiClientInterface } from "@/types";
+// Import required model types
+import type {BcTransferBody} from '../model/BcTransferBody';
 import {InlineResponse200} from '../model/InlineResponse200';
 
 interface QueryParams {
-  [key: string]: string | number | boolean | any[] | undefined;
+  [key: string]: string | number | boolean | null | undefined; // Align with QueryValue type
 }
 
 interface FormParams {
-  [key: string]: string | number | boolean | any | undefined;
+  [key: string]: string | number | boolean | any | undefined; // Restore FormParams
 }
 
 /**
@@ -22,16 +26,17 @@ interface FormParams {
 * @version 0.1.4
 */
 export class BCPaymentApi {
-  private apiClient: ApiClient;
+  private apiClient: ApiClientInterface;
 
-  constructor(apiClient?: ApiClient) {
-    this.apiClient = apiClient || ApiClient.instance;
+  constructor(apiClient?: ApiClientInterface) {
+    this.apiClient = apiClient || ApiClientInstance;
   }
+
 
   /**
    * Get balance of ad accounts in a Business Center [Business Center Balance get](https://ads.tiktok.com/marketing_api/docs?id&#x3D;1739939156300802)
    */
-  bcBalanceGet(bc_id: string, advertiser_ids: string[], Access_Token: string, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcBalanceGet(bc_id: string, advertiser_ids: string[], Access_Token: string, callback?: (error: Error | null, data?: InlineResponse200, response?: Response) => void) {
     if (!bc_id || !advertiser_ids || !Access_Token) {
       throw new Error("Missing required parameters");
     }
@@ -42,7 +47,8 @@ export class BCPaymentApi {
     };
 
     if (advertiser_ids.length > 0) {
-      queryParams['advertiser_ids'] = this.apiClient.buildCollectionParam(advertiser_ids, 'multi');
+      // Assuming CSV format is acceptable for multi-value query parameters
+      queryParams['advertiser_ids'] = advertiser_ids.join(',');
     }
 
     const headerParams: Record<string, string> = {
@@ -59,7 +65,7 @@ export class BCPaymentApi {
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/balance/get/', 'GET',
       pathParams, queryParams, headerParams, formParams, postBody,
-      authNames, contentTypes, accepts, returnType, callback
+      authNames, contentTypes, accepts, returnType, callback as any // Cast callback for now
     );
   }
 
@@ -73,7 +79,7 @@ export class BCPaymentApi {
     page_size?: number,
     trans_type?: string,
     advertiser_ids?: string[]
-  } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  } = {}, callback?: (error: Error | null, data?: InlineResponse200, response?: Response) => void) {
     if (!bc_id || !Access_Token) {
       throw new Error("Missing required parameters");
     }
@@ -89,7 +95,8 @@ export class BCPaymentApi {
     };
 
     if (opts.advertiser_ids && opts.advertiser_ids.length > 0) {
-      queryParams['advertiser_ids'] = this.apiClient.buildCollectionParam(opts.advertiser_ids, 'multi');
+      // Assuming CSV format is acceptable for multi-value query parameters
+      queryParams['advertiser_ids'] = opts.advertiser_ids.join(',');
     }
 
     const headerParams: Record<string, string> = {
@@ -106,14 +113,14 @@ export class BCPaymentApi {
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/transaction/get/', 'GET',
       pathParams, queryParams, headerParams, formParams, postBody,
-      authNames, contentTypes, accepts, returnType, callback
+      authNames, contentTypes, accepts, returnType, callback as any // Cast callback for now
     );
   }
 
   /**
    * Transfer money between ad accounts in a Business Center [Business Center Transfer](https://ads.tiktok.com/marketing_api/docs?id&#x3D;1739939156300802)
    */
-  bcTransfer(Access_Token: string, opts: { body?: BcTransferBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcTransfer(Access_Token: string, opts: { body?: BcTransferBody } = {}, callback?: (error: Error | null, data?: InlineResponse200, response?: Response) => void) {
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
     }
@@ -133,8 +140,8 @@ export class BCPaymentApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/transfer/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
-      authNames, contentTypes, accepts, returnType, callback
+      pathParams, queryParams, headerParams, formParams, postBody as any, // Cast bodyParam to any
+      authNames, contentTypes, accepts, returnType, callback as any // Cast callback for now
     );
   }
 }

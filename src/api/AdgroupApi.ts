@@ -4,12 +4,13 @@
  * This source code is licensed under the MIT license found in
  * the LICENSE file in the root directory of this source tree.
  */
-import ApiClient from "../ApiClient";
-import {AdgroupCreateBody} from '../model/AdgroupCreateBody';
-import {AdgroupStatusUpdateBody} from '../model/AdgroupStatusUpdateBody';
-import {AdgroupUpdateBody} from '../model/AdgroupUpdateBody';
-import {FilteringAdgroupGet} from '../model/FilteringAdgroupGet';
-import {InlineResponse200} from '../model/InlineResponse200';
+import ApiClientInstance from "../ApiClient"; // Renamed default import for clarity
+import { type ApiClientInterface, type JsonValue } from "../types"; // Import interface and JsonValue directly
+import type {AdgroupCreateBody} from '../model/AdgroupCreateBody';
+import type {AdgroupStatusUpdateBody} from '../model/AdgroupStatusUpdateBody';
+import type {AdgroupUpdateBody} from '../model/AdgroupUpdateBody';
+import type {FilteringAdgroupGet} from '../model/FilteringAdgroupGet';
+import {InlineResponse200} from '../model/InlineResponse200'; // Keep this for potential use later if needed
 
 /**
 * Adgroup service.
@@ -17,16 +18,16 @@ import {InlineResponse200} from '../model/InlineResponse200';
 * @version 0.1.4
 */
 export class AdgroupApi {
-  private apiClient: ApiClient;
+  private apiClient: ApiClientInterface;
 
-  constructor(apiClient?: ApiClient) {
-    this.apiClient = apiClient || ApiClient.instance;
+  constructor(apiClient?: ApiClientInterface) {
+    this.apiClient = apiClient || ApiClientInstance; // Use clarified instance name
   }
 
   /**
    * Create an ad group. Ad groups are where you configure your placements, targeting, bidding, and schedule settings. To create multiple ad groups at the same time, you can include up to 10 ad group objects in the `adgroup_list` field. Each ad group must belong to the same advertiser and campaign. [Ad group create](https://ads.tiktok.com/marketing_api/docs?id=1739499616346114)
    */
-  adgroupCreate(Access_Token: string, opts: { body?: AdgroupCreateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  adgroupCreate(Access_Token: string, opts: { body?: AdgroupCreateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) { // Accept unknown data
     const postBody = opts['body'];
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
@@ -42,11 +43,11 @@ export class AdgroupApi {
     const authNames: string[] = [];
     const contentTypes: string[] = ['application/json'];
     const accepts: string[] = ['application/json'];
-    const returnType = InlineResponse200;
+    const returnType = InlineResponse200; // Specify expected return type for conversion
 
     return this.apiClient.callApi(
       '/open_api/v1.3/adgroup/create/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as unknown as JsonValue, // Use double cast
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -59,7 +60,7 @@ export class AdgroupApi {
     page?: number,
     page_size?: number,
     fields?: string[]
-  } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) { // Accept unknown data
     if (!advertiser_id) {
       throw new Error("Missing required parameter 'advertiser_id'");
     }
@@ -74,9 +75,9 @@ export class AdgroupApi {
       'page': opts['page'],
       'page_size': opts['page_size']
     };
-    
+
     if (opts.fields) {
-      queryParams['fields'] = this.apiClient.buildCollectionParam(opts.fields, 'multi');
+      queryParams['fields'] = opts.fields; // Rely on normalizeParams
     }
 
     const headerParams: Record<string, string> = {
@@ -88,7 +89,7 @@ export class AdgroupApi {
     const authNames: string[] = [];
     const contentTypes: string[] = [];
     const accepts: string[] = ['application/json'];
-    const returnType = InlineResponse200;
+    const returnType = InlineResponse200; // Specify expected return type for conversion
 
     return this.apiClient.callApi(
       '/open_api/v1.3/adgroup/get/', 'GET',
@@ -100,7 +101,7 @@ export class AdgroupApi {
   /**
    * Enable, disable or delete an ad group. [Ad group status update](https://ads.tiktok.com/marketing_api/docs?id=1739591716326402)
    */
-  adgroupStatusUpdate(Access_Token: string, opts: { body?: AdgroupStatusUpdateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  adgroupStatusUpdate(Access_Token: string, opts: { body?: AdgroupStatusUpdateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) { // Accept unknown data
     const postBody = opts['body'];
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
@@ -116,11 +117,11 @@ export class AdgroupApi {
     const authNames: string[] = [];
     const contentTypes: string[] = ['application/json'];
     const accepts: string[] = ['application/json'];
-    const returnType = InlineResponse200;
+    const returnType = InlineResponse200; // Specify expected return type for conversion
 
     return this.apiClient.callApi(
       '/open_api/v1.3/adgroup/status/update/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as unknown as JsonValue, // Use double cast
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -128,7 +129,7 @@ export class AdgroupApi {
   /**
    * Modify an ad group's settings such as targeting, placements, scheduling, bidding optimization. [Ad group update](https://ads.tiktok.com/marketing_api/docs?id=1739591716326402)
    */
-  adgroupUpdate(Access_Token: string, opts: { body?: AdgroupUpdateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  adgroupUpdate(Access_Token: string, opts: { body?: AdgroupUpdateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) { // Accept unknown data
     const postBody = opts['body'];
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
@@ -144,11 +145,11 @@ export class AdgroupApi {
     const authNames: string[] = [];
     const contentTypes: string[] = ['application/json'];
     const accepts: string[] = ['application/json'];
-    const returnType = InlineResponse200;
+    const returnType = InlineResponse200; // Specify expected return type for conversion
 
     return this.apiClient.callApi(
       '/open_api/v1.3/adgroup/update/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as unknown as JsonValue, // Use double cast
       authNames, contentTypes, accepts, returnType, callback
     );
   }

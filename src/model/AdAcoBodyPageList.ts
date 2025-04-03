@@ -1,43 +1,45 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
+import { ApiClient } from "../ApiClient";
+import type { ModelBase } from "../types";
 
 /**
- * The AdAcoBodyPageList model module.
- * @module model/AdAcoBodyPageList
- * @version 0.1.4
+ * The AdAcoBodyPageList model.
  */
-export class AdAcoBodyPageList {
-  /**
-   * TikTok Page ID
-   */
-  page_id?: string | undefined;
+export class AdAcoBodyPageList implements ModelBase {
+    'pageId'?: string;
+    'pageName'?: string;
 
-  /**
-   * Constructs a new <code>AdAcoBodyPageList</code>.
-   * @alias module:model/AdAcoBodyPageList
-   * @class
-   */
-  constructor() {}
-
-  /**
-   * Constructs a <code>AdAcoBodyPageList</code> from a plain JavaScript object, optionally creating a new instance.
-   * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-   * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/AdAcoBodyPageList} obj Optional instance to populate.
-   * @return {module:model/AdAcoBodyPageList} The populated <code>AdAcoBodyPageList</code> instance.
-   */
-  static constructFromObject(data: Record<string, any>, obj?: AdAcoBodyPageList): AdAcoBodyPageList {
-    const instance = obj || new AdAcoBodyPageList();
-    
-    if (data && data.hasOwnProperty('page_id')) {
-      instance.page_id = data['page_id'];
+    constructor() {
+        // Initialize any required fields
     }
-    
-    return instance;
-  }
-}
 
+    /**
+     * Returns an instance of AdAcoBodyPageList populated with the given data
+     */
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
+
+        if (typedData['pageId'] !== undefined) {
+            this['pageId'] = ApiClient.convertToType(typedData['pageId'], 'String') as string;
+        }
+        if (typedData['pageName'] !== undefined) {
+            this['pageName'] = ApiClient.convertToType(typedData['pageName'], 'String') as string;
+        }
+
+        return this;
+    }
+
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): AdAcoBodyPageList {
+        const instance = new AdAcoBodyPageList();
+        return instance.constructFromObject(data);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AdAcoBodyPageList {
+        return AdAcoBodyPageList.fromObject(data);
+    }
+}

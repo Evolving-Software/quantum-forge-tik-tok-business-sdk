@@ -1,46 +1,49 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
-import ApiClient from '../ApiClient';
+import { ApiClient } from "../ApiClient";
+import type { ModelBase } from "../types";
 
 /**
- * The AdgroupcreateAudienceRuleExclusionsFilterFilters model module.
- * @module model/AdgroupcreateAudienceRuleExclusionsFilterFilters
- * @version 0.1.4
+ * The AdgroupcreateAudienceRuleExclusionsFilterFilters model.
  */
-export class AdgroupcreateAudienceRuleExclusionsFilterFilters {
-    /** @type {string} */
-    field?: string;
-    /** @type {string} */
-    operator?: string;
-    /** @type {any} */
-    value?: any;
+export class AdgroupcreateAudienceRuleExclusionsFilterFilters implements ModelBase {
+    'field'?: string;
+    'operator'?: string;
+    'value'?: string;
+
+    constructor() {
+        // Initialize any required fields
+    }
 
     /**
-     * Constructs a new <code>AdgroupcreateAudienceRuleExclusionsFilterFilters</code>.
-     * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/AdgroupcreateAudienceRuleExclusionsFilterFilters} obj Optional instance to populate.
-     * @return {module:model/AdgroupcreateAudienceRuleExclusionsFilterFilters} The populated instance.
+     * Returns an instance of AdgroupcreateAudienceRuleExclusionsFilterFilters populated with the given data
      */
-    static constructFromObject(data: any, obj?: AdgroupcreateAudienceRuleExclusionsFilterFilters): AdgroupcreateAudienceRuleExclusionsFilterFilters {
-        if (!data) return new AdgroupcreateAudienceRuleExclusionsFilterFilters();
-        
-        obj = obj || new AdgroupcreateAudienceRuleExclusionsFilterFilters();
-        
-        if (data.hasOwnProperty('field')) {
-            obj.field = ApiClient.convertToType(data['field'], 'String');
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
+
+        if (typedData['field'] !== undefined) {
+            this['field'] = ApiClient.convertToType(typedData['field'], 'String') as string;
         }
-        if (data.hasOwnProperty('operator')) {
-            obj.operator = ApiClient.convertToType(data['operator'], 'String');
+        if (typedData['operator'] !== undefined) {
+            this['operator'] = ApiClient.convertToType(typedData['operator'], 'String') as string;
         }
-        if (data.hasOwnProperty('value')) {
-            obj.value = data['value'];
+        if (typedData['value'] !== undefined) {
+            this['value'] = ApiClient.convertToType(typedData['value'], 'String') as string;
         }
 
-        return obj;
+        return this;
+    }
+
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): AdgroupcreateAudienceRuleExclusionsFilterFilters {
+        const instance = new AdgroupcreateAudienceRuleExclusionsFilterFilters();
+        return instance.constructFromObject(data);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AdgroupcreateAudienceRuleExclusionsFilterFilters {
+        return AdgroupcreateAudienceRuleExclusionsFilterFilters.fromObject(data);
     }
 }
-

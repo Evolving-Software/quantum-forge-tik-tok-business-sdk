@@ -4,9 +4,16 @@
  * This source code is licensed under the MIT license found in
  * the LICENSE file in the root directory of this source tree.
  */
-import ApiClient from "../ApiClient";
-import {FilteringReportIntegratedGet} from '../model/FilteringReportIntegratedGet';
+// Import the default instance and rename it for clarity
+import ApiClientInstance from "../ApiClient";
+// Import the interface type and relevant types
+import { ApiClientInterface, type QueryValue, type FormValue } from "@/types";
+// Import required model types
+import type {FilteringReportIntegratedGet} from '../model/FilteringReportIntegratedGet';
 import {InlineResponse200} from '../model/InlineResponse200';
+
+// Define the callback type matching ApiClientInterface
+type Callback = (error: Error | null, data?: InlineResponse200, response?: Response) => void;
 
 /**
 * Reporting service.
@@ -14,7 +21,7 @@ import {InlineResponse200} from '../model/InlineResponse200';
 * @version 0.1.4
 */
 export class ReportingApi {
-    private apiClient: ApiClient;
+    private apiClient: ApiClientInterface; // Use interface type
 
     /**
     * Constructs a new ReportingApi. 
@@ -23,8 +30,8 @@ export class ReportingApi {
     * @param {module:ApiClient} [apiClient] Optional API client implementation to use,
     * default to {@link module:ApiClient#instance} if unspecified.
     */
-    constructor(apiClient?: ApiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
+    constructor(apiClient?: ApiClientInterface) {
+        this.apiClient = apiClient || ApiClientInstance;
     }
 
     /**
@@ -77,8 +84,8 @@ export class ReportingApi {
             query_mode?: string;
         } = {},
         callback?: (error: string | null, data?: InlineResponse200, response?: any) => void
-    ) {
-        let postBody = null;
+    ): Promise<InlineResponse200> { // Add return type Promise<InlineResponse200>
+        const postBody = null;
         if (advertiser_id === undefined || advertiser_id === null) {
             throw new Error("Missing the required parameter 'advertiser_id' when calling reportIntegratedGet");
         }
@@ -93,37 +100,41 @@ export class ReportingApi {
         }
 
         const pathParams: Record<string, string> = {};
-        const queryParams: Record<string, any> = {
+        const queryParams: Record<string, QueryValue> = {
             'advertiser_id': advertiser_id,
-            'service_type': opts['service_type'],
-            'data_level': opts['data_level'],
+            'service_type': opts.service_type,
+            'data_level': opts.data_level,
             'report_type': report_type,
-            'dimensions': this.apiClient.buildCollectionParam(dimensions, 'multi'),
-            'metrics': this.apiClient.buildCollectionParam(opts['metrics'] || [], 'multi'),
-            'order_field': opts['order_field'],
-            'order_type': opts['order_type'],
-            'start_date': opts['start_date'],
-            'end_date': opts['end_date'],
-            'filtering': this.apiClient.buildCollectionParam(opts['filtering'] || [], 'multi'),
-            'query_lifetime': opts['query_lifetime'],
-            'page': opts['page'],
-            'page_size': opts['page_size'],
-            'query_mode': opts['query_mode']
+            'dimensions': dimensions.join(','), // Replace buildCollectionParam
+            'metrics': opts.metrics ? opts.metrics.join(',') : undefined, // Replace buildCollectionParam
+            'order_field': opts.order_field,
+            'order_type': opts.order_type,
+            'start_date': opts.start_date,
+            'end_date': opts.end_date,
+            // Stringify complex filter array for query params
+            'filtering': opts.filtering ? JSON.stringify(opts.filtering) : undefined, 
+            'query_lifetime': opts.query_lifetime,
+            'page': opts.page,
+            'page_size': opts.page_size,
+            'query_mode': opts.query_mode
         };
         const headerParams: Record<string, string> = {
             'Access-Token': Access_Token
         };
-        const formParams: Record<string, any> = {};
+        const formParams: Record<string, FormValue> = {}; // Empty for GET
 
         const authNames: string[] = [];
         const contentTypes: string[] = [];
         const accepts: string[] = ['application/json'];
         const returnType = InlineResponse200;
 
+        // Remove undefined keys from queryParams
+        Object.keys(queryParams).forEach(key => queryParams[key] === undefined && delete queryParams[key]);
+
         return this.apiClient.callApi(
             '/open_api/v1.3/report/integrated/get/', 'GET',
             pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 }

@@ -37,8 +37,8 @@ export class PixelBatchBody {
             throw new Error("Data cannot be null");
         }
 
-        const batch = ApiClient.convertToType(data['batch'], ['Object']);
-        const pixel_code = ApiClient.convertToType(data['pixel_code'], 'String');
+        const batch = ApiClient.convertToType(data['batch'], ['Object']) as Array<any>;
+        const pixel_code = ApiClient.convertToType(data['pixel_code'], 'String') as string;
 
         if (!obj) {
             obj = new PixelBatchBody(batch, pixel_code);

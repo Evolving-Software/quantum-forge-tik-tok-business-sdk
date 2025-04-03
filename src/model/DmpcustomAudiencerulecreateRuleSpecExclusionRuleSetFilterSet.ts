@@ -41,7 +41,7 @@ export class DmpcustomAudiencerulecreateRuleSpecExclusionRuleSetFilterSet implem
     obj = obj || new DmpcustomAudiencerulecreateRuleSpecExclusionRuleSetFilterSet();
     
     if (data.hasOwnProperty('filters'))
-      obj.filters = ApiClient.convertToType(data['filters'], [DmpcustomAudiencerulecreateRuleSpecExclusionRuleSetFilterSetFilters]);
+      obj.filters = ApiClient.convertToType(data['filters'], new Array) as DmpcustomAudiencerulecreateRuleSpecExclusionRuleSetFilterSetFilters[];
     if (data.hasOwnProperty('operator'))
       obj.operator = ApiClient.convertToType(data['operator'], 'String');
 

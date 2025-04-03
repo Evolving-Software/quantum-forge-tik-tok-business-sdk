@@ -1,8 +1,7 @@
 {
   "name": "@quantum-forge/tik-tok-business-sdk",
-  "version": "0.0.3",
+  "version": "0.0.4-alpha-0.0.1",
   "description": "Modern TypeScript SDK for the TikTok Business API with strict type checking and ESM support",
-  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "mocha --require ts-node/register --recursive \"test/**/*.ts\"",

@@ -1,74 +1,59 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
-import ApiClient from '../ApiClient';
+import { ApiClient } from "../ApiClient";
+import { type ModelBase, createArraySpec } from "../types";
 
 /**
- * The AdStatusUpdateBody model module.
- * @module model/AdStatusUpdateBody
- * @version 0.1.4
+ * The AdStatusUpdateBody model.
  */
-export class AdStatusUpdateBody {
-    /**
-     * A list of ACO ad IDs. Only support `ENABLE` and `DISABLE` for ACO ads.
-     * Allowed quantity- `1-20`. Either `ad_ids` or `aco_ad_ids` has to be set.
-     * @type {string[]}
-     */
-    aco_ad_ids?: string[];
+export class AdStatusUpdateBody implements ModelBase {
+    'adIds'?: string[];
+    'advertiserId'?: string;
+    'operateStatus'?: string;
+    'optionAdIds'?: string[];
 
-    /**
-     * A list of ad IDs. Allowed quantity- `1-20`. Either `ad_ids` or `aco_ad_ids` has to be set.
-     * @type {string[]}
-     */
-    ad_ids?: string[];
-
-    /** 
-     * Advertiser ID
-     * @type {string} 
-     */
-    advertiser_id?: string;
-
-    /**
-     * The operation being made. Enum values: `DELETE` (delete), `DISABLE` (pause), `ENABLE` (enable).
-     * The status of deleted ads cannot be modified.
-     * @type {string}
-     */
-    operation_status?: string;
-
-    /**
-     * Constructs a new <code>AdStatusUpdateBody</code>.
-     * @param advertiser_id {string} Advertiser ID
-     * @param operation_status {string} The operation being made.
-     */
-    constructor(advertiser_id: string, operation_status: string) {
-        this.advertiser_id = advertiser_id;
-        this.operation_status = operation_status;
+    constructor() {
+        // Initialize any required fields
     }
 
     /**
-     * Constructs a <code>AdStatusUpdateBody</code> from a plain JavaScript object.
-     * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/AdStatusUpdateBody} obj Optional instance to populate.
-     * @return {module:model/AdStatusUpdateBody} The populated instance.
+     * Returns an instance of AdStatusUpdateBody populated with the given data
      */
-    static constructFromObject(data: any, obj?: AdStatusUpdateBody): AdStatusUpdateBody {
-        if (!data) return new AdStatusUpdateBody("", "");
-        
-        obj = obj || new AdStatusUpdateBody("", "");
-        
-        if (data.hasOwnProperty('aco_ad_ids'))
-            obj.aco_ad_ids = ApiClient.convertToType(data['aco_ad_ids'], ['String']);
-        if (data.hasOwnProperty('ad_ids'))
-            obj.ad_ids = ApiClient.convertToType(data['ad_ids'], ['String']);
-        if (data.hasOwnProperty('advertiser_id'))
-            obj.advertiser_id = ApiClient.convertToType(data['advertiser_id'], 'String');
-        if (data.hasOwnProperty('operation_status'))
-            obj.operation_status = ApiClient.convertToType(data['operation_status'], 'String');
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
 
-        return obj;
+        if (typedData['adIds'] !== undefined) {
+            this['adIds'] = ApiClient.convertToType(
+                typedData['adIds'], 
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['advertiserId'] !== undefined) {
+            this['advertiserId'] = ApiClient.convertToType(typedData['advertiserId'], 'String') as string;
+        }
+        if (typedData['operateStatus'] !== undefined) {
+            this['operateStatus'] = ApiClient.convertToType(typedData['operateStatus'], 'String') as string;
+        }
+        if (typedData['optionAdIds'] !== undefined) {
+            this['optionAdIds'] = ApiClient.convertToType(
+                typedData['optionAdIds'], 
+                createArraySpec('String')
+            ) as string[];
+        }
+
+        return this;
+    }
+
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): AdStatusUpdateBody {
+        const instance = new AdStatusUpdateBody();
+        return instance.constructFromObject(data);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AdStatusUpdateBody {
+        return AdStatusUpdateBody.fromObject(data);
     }
 }
-

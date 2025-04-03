@@ -177,6 +177,10 @@ import {RecommendToolApi} from './api/RecommendToolApi';
 import {ReportingApi} from './api/ReportingApi';
 import {ToolApi} from './api/ToolApi';
 
+import type { Campaign } from './model/Campaign';
+import type { CampaignCreateBodyProps } from './model/CampaignCreateBody';
+import type { CampaignUpdateBodyProps } from './model/CampaignUpdateBody';
+
 /**
 * Comprehensive_collection_of_client_libraries_that_enable_our_developers_to_build_software_to_integrate_with_Business_API_faster_and_in_a_more_standardized_way_.<br>
 * The <code>index</code> module provides access to constructors for all the classes which comprise the public API.
@@ -1239,5 +1243,12 @@ export {
     * The ToolApi service constructor.
     * @property {module:api/ToolApi}
     */
-    ToolApi
+    ToolApi,
+};
+
+// Separate type exports
+export type {
+    Campaign,
+    CampaignCreateBodyProps,
+    CampaignUpdateBodyProps,
 };

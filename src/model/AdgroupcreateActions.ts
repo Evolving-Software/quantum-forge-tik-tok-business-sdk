@@ -1,60 +1,67 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
-import ApiClient from '../ApiClient';
+import { ApiClient } from "../ApiClient";
+import { type ModelBase, createArraySpec } from "../types";
 
 /**
- * The AdgroupcreateActions model module.
- * @module model/AdgroupcreateActions
- * @version 0.1.4
+ * The AdgroupcreateActions model.
  */
-export class AdgroupcreateActions {
-    /** @type {Array<string>} */
-    action_category_ids?: string[];
-    /** @type {number} */
-    action_period?: number;
-    /** @type {string} */
-    action_scene?: string;
-    /** @type {Array<string>} */
-    video_user_actions?: string[];
+export class AdgroupcreateActions implements ModelBase {
+    'actionCategory'?: string[];
+    'actionDays'?: string;
+    'actionWords'?: string;
+    'deepBidType'?: string;
+    'externalAction'?: string;
+    'secondaryOptimizationEvent'?: string[];
 
-    /**
-     * Constructs a new <code>AdgroupcreateActions</code>.
-     * @alias module:model/AdgroupcreateActions
-     * @class
-     */
     constructor() {
+        // Initialize any required fields
     }
 
     /**
-     * Constructs a <code>AdgroupcreateActions</code> from a plain JavaScript object, optionally creating a new instance.
-     * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-     * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/AdgroupcreateActions} obj Optional instance to populate.
-     * @return {module:model/AdgroupcreateActions} The populated <code>AdgroupcreateActions</code> instance.
+     * Returns an instance of AdgroupcreateActions populated with the given data
      */
-    static constructFromObject(data: any, obj?: AdgroupcreateActions): AdgroupcreateActions {
-        if (!data) return new AdgroupcreateActions();
-        
-        obj = obj || new AdgroupcreateActions();
-        
-        if (data.hasOwnProperty('action_category_ids')) {
-            obj.action_category_ids = ApiClient.convertToType(data['action_category_ids'], ['String']);
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
+
+        if (typedData['actionCategory'] !== undefined) {
+            this['actionCategory'] = ApiClient.convertToType(
+                typedData['actionCategory'],
+                createArraySpec('String')
+            ) as string[];
         }
-        if (data.hasOwnProperty('action_period')) {
-            obj.action_period = ApiClient.convertToType(data['action_period'], 'Number');
+        if (typedData['actionDays'] !== undefined) {
+            this['actionDays'] = ApiClient.convertToType(typedData['actionDays'], 'String') as string;
         }
-        if (data.hasOwnProperty('action_scene')) {
-            obj.action_scene = ApiClient.convertToType(data['action_scene'], 'String');
+        if (typedData['actionWords'] !== undefined) {
+            this['actionWords'] = ApiClient.convertToType(typedData['actionWords'], 'String') as string;
         }
-        if (data.hasOwnProperty('video_user_actions')) {
-            obj.video_user_actions = ApiClient.convertToType(data['video_user_actions'], ['String']);
+        if (typedData['deepBidType'] !== undefined) {
+            this['deepBidType'] = ApiClient.convertToType(typedData['deepBidType'], 'String') as string;
+        }
+        if (typedData['externalAction'] !== undefined) {
+            this['externalAction'] = ApiClient.convertToType(typedData['externalAction'], 'String') as string;
+        }
+        if (typedData['secondaryOptimizationEvent'] !== undefined) {
+            this['secondaryOptimizationEvent'] = ApiClient.convertToType(
+                typedData['secondaryOptimizationEvent'],
+                createArraySpec('String')
+            ) as string[];
         }
 
-        return obj;
+        return this;
+    }
+
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): AdgroupcreateActions {
+        const instance = new AdgroupcreateActions();
+        return instance.constructFromObject(data);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AdgroupcreateActions {
+        return AdgroupcreateActions.fromObject(data);
     }
 }
-

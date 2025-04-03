@@ -1,42 +1,57 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
-import { AdgroupcreateAudienceRuleExclusions } from './AdgroupcreateAudienceRuleExclusions';
-import { AdgroupcreateAudienceRuleInclusions } from './AdgroupcreateAudienceRuleInclusions';
+import { ApiClient } from "../ApiClient";
+import type { ModelBase } from "../types";
+import { AdgroupcreateAudienceRuleExclusions } from "./AdgroupcreateAudienceRuleExclusions";
+import { AdgroupcreateAudienceRuleInclusions } from "./AdgroupcreateAudienceRuleInclusions";
 
 /**
- * The AdgroupcreateAudienceRule model module.
- * @module model/AdgroupcreateAudienceRule
- * @version 0.1.1
+ * The AdgroupcreateAudienceRule model.
  */
-export class AdgroupcreateAudienceRule {
-    /** @type {AdgroupcreateAudienceRuleExclusions} */
-    exclusions?: AdgroupcreateAudienceRuleExclusions;
-    /** @type {AdgroupcreateAudienceRuleInclusions} */
-    inclusions?: AdgroupcreateAudienceRuleInclusions;
+export class AdgroupcreateAudienceRule implements ModelBase {
+    'exclusions'?: AdgroupcreateAudienceRuleExclusions;
+    'inclusions'?: AdgroupcreateAudienceRuleInclusions;
+    'operator'?: string;
+
+    constructor() {
+        // Initialize any required fields
+    }
 
     /**
-     * Constructs a new <code>AdgroupcreateAudienceRule</code>.
-     * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/AdgroupcreateAudienceRule} obj Optional instance to populate.
-     * @return {module:model/AdgroupcreateAudienceRule} The populated instance.
+     * Returns an instance of AdgroupcreateAudienceRule populated with the given data
      */
-    static constructFromObject(data: any, obj?: AdgroupcreateAudienceRule): AdgroupcreateAudienceRule {
-        if (!data) return new AdgroupcreateAudienceRule();
-        
-        obj = obj || new AdgroupcreateAudienceRule();
-        
-        if (data.hasOwnProperty('exclusions')) {
-            obj.exclusions = AdgroupcreateAudienceRuleExclusions.constructFromObject(data['exclusions'], new AdgroupcreateAudienceRuleExclusions());
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
+
+        if (typedData['exclusions'] !== undefined) {
+            this['exclusions'] = ApiClient.convertToType(
+                typedData['exclusions'],
+                AdgroupcreateAudienceRuleExclusions
+            ) as AdgroupcreateAudienceRuleExclusions;
         }
-        if (data.hasOwnProperty('inclusions')) {
-            obj.inclusions = AdgroupcreateAudienceRuleInclusions.constructFromObject(data['inclusions'], new AdgroupcreateAudienceRuleInclusions());
+        if (typedData['inclusions'] !== undefined) {
+            this['inclusions'] = ApiClient.convertToType(
+                typedData['inclusions'],
+                AdgroupcreateAudienceRuleInclusions
+            ) as AdgroupcreateAudienceRuleInclusions;
+        }
+        if (typedData['operator'] !== undefined) {
+            this['operator'] = ApiClient.convertToType(typedData['operator'], 'String') as string;
         }
 
-        return obj;
+        return this;
+    }
+
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): AdgroupcreateAudienceRule {
+        const instance = new AdgroupcreateAudienceRule();
+        return instance.constructFromObject(data);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AdgroupcreateAudienceRule {
+        return AdgroupcreateAudienceRule.fromObject(data);
     }
 }
-

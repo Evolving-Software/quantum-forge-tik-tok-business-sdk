@@ -1,39 +1,45 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
-import {AdAcoBodyAvatarIcon} from './AdAcoBodyAvatarIcon';
+import { ApiClient } from "../ApiClient";
+import type { ModelBase } from "../types";
 
 /**
- * The AdAcoBodyAvatarIconList model module.
- * @module model/AdAcoBodyAvatarIconList
- * @version 0.1.4
+ * The AdAcoBodyAvatarIconList model.
  */
-export class AdAcoBodyAvatarIconList {
-  avatar_icon?: AdAcoBodyAvatarIcon;
+export class AdAcoBodyAvatarIconList implements ModelBase {
+    'avatarIcon'?: string;
+    'description'?: string;
 
-  /**
-   * Constructs a new <code>AdAcoBodyAvatarIconList</code>.
-   * @alias module:model/AdAcoBodyAvatarIconList
-   * @class
-   */
-  constructor() {}
-
-  /**
-   * Constructs a <code>AdAcoBodyAvatarIconList</code> from a plain JavaScript object, optionally creating a new instance.
-   * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-   * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/AdAcoBodyAvatarIconList} obj Optional instance to populate.
-   * @return {module:model/AdAcoBodyAvatarIconList} The populated <code>AdAcoBodyAvatarIconList</code> instance.
-   */
-  static constructFromObject(data: Record<string, any>, obj?: AdAcoBodyAvatarIconList): AdAcoBodyAvatarIconList {
-    const instance = obj || new AdAcoBodyAvatarIconList();
-    if (data && data.hasOwnProperty('avatar_icon')) {
-      instance.avatar_icon = AdAcoBodyAvatarIcon.constructFromObject(data['avatar_icon']);
+    constructor() {
+        // Initialize any required fields
     }
-    return instance;
-  }
-}
 
+    /**
+     * Returns an instance of AdAcoBodyAvatarIconList populated with the given data
+     */
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
+
+        if (typedData['avatarIcon'] !== undefined) {
+            this['avatarIcon'] = ApiClient.convertToType(typedData['avatarIcon'], 'String') as string;
+        }
+        if (typedData['description'] !== undefined) {
+            this['description'] = ApiClient.convertToType(typedData['description'], 'String') as string;
+        }
+
+        return this;
+    }
+
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): AdAcoBodyAvatarIconList {
+        const instance = new AdAcoBodyAvatarIconList();
+        return instance.constructFromObject(data);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AdAcoBodyAvatarIconList {
+        return AdAcoBodyAvatarIconList.fromObject(data);
+    }
+}

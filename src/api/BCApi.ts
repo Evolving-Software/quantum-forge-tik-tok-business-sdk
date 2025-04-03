@@ -5,39 +5,41 @@
  * the LICENSE file in the root directory of this source tree.
  */
 import ApiClient from "../ApiClient";
-import {AdminDeleteBody} from '../model/AdminDeleteBody';
-import {AdvertiserCreateBody} from '../model/AdvertiserCreateBody';
-import {AssetAssignBody} from '../model/AssetAssignBody';
-import {AssetDeleteBody} from '../model/AssetDeleteBody';
-import {AssetGroupCreateBody} from '../model/AssetGroupCreateBody';
-import {AssetGroupDeleteBody} from '../model/AssetGroupDeleteBody';
-import {AssetGroupUpdateBody} from '../model/AssetGroupUpdateBody';
-import {AssetUnassignBody} from '../model/AssetUnassignBody';
-import {BcTransferBody} from '../model/BcTransferBody';
-import {BillingGroupCreateBody} from '../model/BillingGroupCreateBody';
-import {BillingGroupUpdateBody} from '../model/BillingGroupUpdateBody';
-import {FilteringAdvertiserBalanceGet} from '../model/FilteringAdvertiserBalanceGet';
-import {FilteringAdvertiserTransactionGet} from '../model/FilteringAdvertiserTransactionGet';
-import {FilteringBcAccountTransactionGet} from '../model/FilteringBcAccountTransactionGet';
-import {FilteringBcAssetAdminGet} from '../model/FilteringBcAssetAdminGet';
-import {FilteringBcAssetGet} from '../model/FilteringBcAssetGet';
-import {FilteringBcAssetGroupGet} from '../model/FilteringBcAssetGroupGet';
-import {FilteringBcAssetGroupList} from '../model/FilteringBcAssetGroupList';
-import {FilteringBcAssetMemberGet} from '../model/FilteringBcAssetMemberGet';
-import {FilteringBcBillingGroupGet} from '../model/FilteringBcBillingGroupGet';
-import {FilteringBcGet} from '../model/FilteringBcGet';
-import {FilteringBcMemberGet} from '../model/FilteringBcMemberGet';
-import {FilteringBcPartnerAssetGet} from '../model/FilteringBcPartnerAssetGet';
-import {FilteringBcPartnerGet} from '../model/FilteringBcPartnerGet';
-import {FilteringBcTransactionGet} from '../model/FilteringBcTransactionGet';
+import { ApiClientInterface, QueryValue } from "@/types"; // Added QueryValue
+import DefaultApiClient, { ApiClient as ActualApiClient } from "../ApiClient"; // Use named import for class
+import type {AdminDeleteBody} from '../model/AdminDeleteBody';
+import type {AdvertiserCreateBody} from '../model/AdvertiserCreateBody';
+import type {AssetAssignBody} from '../model/AssetAssignBody';
+import type {AssetDeleteBody} from '../model/AssetDeleteBody';
+import type {AssetGroupCreateBody} from '../model/AssetGroupCreateBody';
+import type {AssetGroupDeleteBody} from '../model/AssetGroupDeleteBody';
+import type {AssetGroupUpdateBody} from '../model/AssetGroupUpdateBody';
+import type {AssetUnassignBody} from '../model/AssetUnassignBody';
+import type {BcTransferBody} from '../model/BcTransferBody';
+import type {BillingGroupCreateBody} from '../model/BillingGroupCreateBody';
+import type {BillingGroupUpdateBody} from '../model/BillingGroupUpdateBody';
+import type {FilteringAdvertiserBalanceGet} from '../model/FilteringAdvertiserBalanceGet';
+import type {FilteringAdvertiserTransactionGet} from '../model/FilteringAdvertiserTransactionGet';
+import type {FilteringBcAccountTransactionGet} from '../model/FilteringBcAccountTransactionGet';
+import type {FilteringBcAssetAdminGet} from '../model/FilteringBcAssetAdminGet';
+import type {FilteringBcAssetGet} from '../model/FilteringBcAssetGet';
+import type {FilteringBcAssetGroupGet} from '../model/FilteringBcAssetGroupGet';
+import type {FilteringBcAssetGroupList} from '../model/FilteringBcAssetGroupList';
+import type {FilteringBcAssetMemberGet} from '../model/FilteringBcAssetMemberGet';
+import type {FilteringBcBillingGroupGet} from '../model/FilteringBcBillingGroupGet';
+import type {FilteringBcGet} from '../model/FilteringBcGet';
+import type {FilteringBcMemberGet} from '../model/FilteringBcMemberGet';
+import type {FilteringBcPartnerAssetGet} from '../model/FilteringBcPartnerAssetGet';
+import type {FilteringBcPartnerGet} from '../model/FilteringBcPartnerGet';
+import type {FilteringBcTransactionGet} from '../model/FilteringBcTransactionGet';
 import {InlineResponse200} from '../model/InlineResponse200';
-import {LinkUpdateBody} from '../model/LinkUpdateBody';
-import {MemberDeleteBody} from '../model/MemberDeleteBody';
-import {MemberInviteBody} from '../model/MemberInviteBody';
-import {MemberUpdateBody} from '../model/MemberUpdateBody';
-import {PartnerAddBody} from '../model/PartnerAddBody';
-import {PartnerDeleteBody} from '../model/PartnerDeleteBody';
-import {PixelTransferBody} from '../model/PixelTransferBody';
+import type {LinkUpdateBody} from '../model/LinkUpdateBody';
+import type {MemberDeleteBody} from '../model/MemberDeleteBody';
+import type {MemberInviteBody} from '../model/MemberInviteBody';
+import type {MemberUpdateBody} from '../model/MemberUpdateBody';
+import type {PartnerAddBody} from '../model/PartnerAddBody';
+import type {PartnerDeleteBody} from '../model/PartnerDeleteBody';
+import type {PixelTransferBody} from '../model/PixelTransferBody';
 
 interface QueryParams {
   [key: string]: string | number | boolean | any[] | undefined;
@@ -58,10 +60,10 @@ function serializeFiltering(filtering: any): string | undefined {
 * @version 0.1.4
 */
 export class BCApi {
-  private apiClient: ApiClient;
+  private apiClient: ApiClientInterface; // Use interface for type
 
-  constructor(apiClient?: ApiClient) {
-    this.apiClient = apiClient || ApiClient.instance;
+  constructor(apiClient?: ApiClientInterface) { // Use interface for type
+    this.apiClient = apiClient || ActualApiClient.instance; // Use imported class for static member
   }
  
   /**
@@ -84,7 +86,7 @@ export class BCApi {
    * @param {module:api/BCApi~advertiserBalanceGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  advertiserBalanceGet(bc_id: string, Access_Token: string, opts: { child_bc_id?: string, filtering?: FilteringAdvertiserBalanceGet, page?: number, page_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  advertiserBalanceGet(bc_id: string, Access_Token: string, opts: { child_bc_id?: string, filtering?: FilteringAdvertiserBalanceGet, page?: number, page_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'bc_id' is set
@@ -97,7 +99,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': bc_id, 'child_bc_id': opts['child_bc_id'], 'filtering': serializeFiltering(opts['filtering']), 'page': opts['page'], 'page_size': opts['page_size']
     };
     let headerParams: Record<string, string> = {
@@ -112,7 +114,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/advertiser/balance/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -135,7 +137,7 @@ export class BCApi {
    * @param {module:api/BCApi~advertiserTransactionGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  advertiserTransactionGet(bc_id: number, Access_Token: string, opts: { filtering?: FilteringAdvertiserTransactionGet, page?: number, page_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  advertiserTransactionGet(bc_id: number, Access_Token: string, opts: { filtering?: FilteringAdvertiserTransactionGet, page?: number, page_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'bc_id' is set
@@ -148,7 +150,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': bc_id, 'filtering': serializeFiltering(opts['filtering']), 'page': opts['page'], 'page_size': opts['page_size']
     };
     let headerParams: Record<string, string> = {
@@ -163,7 +165,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/advertiser/transaction/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -188,7 +190,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcAccountTransactionGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcAccountTransactionGet(Access_Token: string, opts: { bc_id?: string, child_bc_id?: string, transaction_level?: string, filtering?: FilteringBcAccountTransactionGet, page?: number, page_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcAccountTransactionGet(Access_Token: string, opts: { bc_id?: string, child_bc_id?: string, transaction_level?: string, filtering?: FilteringBcAccountTransactionGet, page?: number, page_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'Access_Token' is set
@@ -197,7 +199,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': opts['bc_id'], 'child_bc_id': opts['child_bc_id'], 'transaction_level': opts['transaction_level'], 'filtering': serializeFiltering(opts['filtering']), 'page': opts['page'], 'page_size': opts['page_size']
     };
     let headerParams: Record<string, string> = {
@@ -212,7 +214,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/account/transaction/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -232,7 +234,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcAdvertiserCreateCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcAdvertiserCreate(Access_Token: string, opts: { body?: AdvertiserCreateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcAdvertiserCreate(Access_Token: string, opts: { body?: AdvertiserCreateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -241,7 +243,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -254,7 +256,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/advertiser/create/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -274,7 +276,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcAssetAdminDeleteCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcAssetAdminDelete(Access_Token: string, opts: { body?: AdminDeleteBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcAssetAdminDelete(Access_Token: string, opts: { body?: AdminDeleteBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -283,7 +285,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -296,7 +298,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/asset/admin/delete/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -321,7 +323,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcAssetAdminGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcAssetAdminGet(bc_id: string, asset_type: string, Access_Token: string, opts: { child_bc_id?: string, filtering?: FilteringBcAssetAdminGet, page?: number, page_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcAssetAdminGet(bc_id: string, asset_type: string, Access_Token: string, opts: { child_bc_id?: string, filtering?: FilteringBcAssetAdminGet, page?: number, page_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'bc_id' is set
@@ -338,7 +340,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': bc_id, 'child_bc_id': opts['child_bc_id'], 'asset_type': asset_type, 'filtering': serializeFiltering(opts['filtering']), 'page': opts['page'], 'page_size': opts['page_size']
     };
     let headerParams: Record<string, string> = {
@@ -353,7 +355,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/asset/admin/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -373,7 +375,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcAssetAssignCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcAssetAssign(Access_Token: string, opts: { body?: AssetAssignBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcAssetAssign(Access_Token: string, opts: { body?: AssetAssignBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -382,7 +384,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -395,7 +397,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/asset/assign/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -420,7 +422,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcAssetGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcAssetGet(bc_id: string, asset_type: string, Access_Token: string, opts: { child_bc_id?: string, filtering?: FilteringBcAssetGet, page?: number, page_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcAssetGet(bc_id: string, asset_type: string, Access_Token: string, opts: { child_bc_id?: string, filtering?: FilteringBcAssetGet, page?: number, page_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'bc_id' is set
@@ -437,7 +439,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': bc_id, 'asset_type': asset_type, 'child_bc_id': opts['child_bc_id'], 'filtering': serializeFiltering(opts['filtering']), 'page': opts['page'], 'page_size': opts['page_size']
     };
     let headerParams: Record<string, string> = {
@@ -452,7 +454,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/asset/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -472,7 +474,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcAssetGroupCreateCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcAssetGroupCreate(Access_Token: string, opts: { body?: AssetGroupCreateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcAssetGroupCreate(Access_Token: string, opts: { body?: AssetGroupCreateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -481,7 +483,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -494,7 +496,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/asset_group/create/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -514,7 +516,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcAssetGroupDeleteCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcAssetGroupDelete(Access_Token: string, opts: { body?: AssetGroupDeleteBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcAssetGroupDelete(Access_Token: string, opts: { body?: AssetGroupDeleteBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -523,7 +525,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -536,7 +538,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/asset_group/delete/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -561,7 +563,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcAssetGroupGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcAssetGroupGet(bc_id: string, asset_group_id: string, query_entity: string, Access_Token: string, opts: { filtering?: FilteringBcAssetGroupGet, page?: number, page_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcAssetGroupGet(bc_id: string, asset_group_id: string, query_entity: string, Access_Token: string, opts: { filtering?: FilteringBcAssetGroupGet, page?: number, page_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'bc_id' is set
@@ -582,7 +584,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': bc_id, 'asset_group_id': asset_group_id, 'query_entity': query_entity, 'filtering': serializeFiltering(opts['filtering']), 'page': opts['page'], 'page_size': opts['page_size']
     };
     let headerParams: Record<string, string> = {
@@ -597,7 +599,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/asset_group/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -620,7 +622,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcAssetGroupListCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcAssetGroupList(bc_id: string, Access_Token: string, opts: { filtering?: FilteringBcAssetGroupList, page?: number, page_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcAssetGroupList(bc_id: string, Access_Token: string, opts: { filtering?: FilteringBcAssetGroupList, page?: number, page_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'bc_id' is set
@@ -633,7 +635,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': bc_id, 'filtering': serializeFiltering(opts['filtering']), 'page': opts['page'], 'page_size': opts['page_size']
     };
     let headerParams: Record<string, string> = {
@@ -648,7 +650,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/asset_group/list/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -668,7 +670,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcAssetGroupUpdateCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcAssetGroupUpdate(Access_Token: string, opts: { body?: AssetGroupUpdateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcAssetGroupUpdate(Access_Token: string, opts: { body?: AssetGroupUpdateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -677,7 +679,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -690,7 +692,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/asset_group/update/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -715,7 +717,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcAssetMemberGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcAssetMemberGet(bc_id: string, asset_type: string, asset_id: string, Access_Token: string, opts: { filtering?: FilteringBcAssetMemberGet, page?: number, page_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcAssetMemberGet(bc_id: string, asset_type: string, asset_id: string, Access_Token: string, opts: { filtering?: FilteringBcAssetMemberGet, page?: number, page_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'bc_id' is set
@@ -736,7 +738,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': bc_id, 'asset_type': asset_type, 'asset_id': asset_id, 'filtering': serializeFiltering(opts['filtering']), 'page': opts['page'], 'page_size': opts['page_size']
     };
     let headerParams: Record<string, string> = {
@@ -751,7 +753,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/asset/member/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -776,7 +778,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcAssetPartnerGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcAssetPartnerGet(bc_id: string, asset_type: string, asset_id: string, Access_Token: string, opts: { filtering?: any, page?: number, page_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcAssetPartnerGet(bc_id: string, asset_type: string, asset_id: string, Access_Token: string, opts: { filtering?: any, page?: number, page_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'bc_id' is set
@@ -797,7 +799,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': bc_id, 'asset_type': asset_type, 'asset_id': asset_id, 'filtering': serializeFiltering(opts['filtering']), 'page': opts['page'], 'page_size': opts['page_size']
     };
     let headerParams: Record<string, string> = {
@@ -812,7 +814,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/asset/partner/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -832,7 +834,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcAssetUnassignCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcAssetUnassign(Access_Token: string, opts: { body?: AssetUnassignBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcAssetUnassign(Access_Token: string, opts: { body?: AssetUnassignBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -841,7 +843,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -854,7 +856,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/asset/unassign/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -875,7 +877,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcBalanceGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcBalanceGet(bc_id: string, Access_Token: string, opts: { child_bc_id?: string } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcBalanceGet(bc_id: string, Access_Token: string, opts: { child_bc_id?: string } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'bc_id' is set
@@ -888,7 +890,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': bc_id, 'child_bc_id': opts['child_bc_id']
     };
     let headerParams: Record<string, string> = {
@@ -903,7 +905,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/balance/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -923,7 +925,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcBillingGroupCreateCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcBillingGroupCreate(Access_Token: string, opts: { body?: BillingGroupCreateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcBillingGroupCreate(Access_Token: string, opts: { body?: BillingGroupCreateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -932,7 +934,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -945,7 +947,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/billing_group/create/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -968,7 +970,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcBillingGroupGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcBillingGroupGet(bc_id: string, Access_Token: string, opts: { filtering?: FilteringBcBillingGroupGet, page?: number, page_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcBillingGroupGet(bc_id: string, Access_Token: string, opts: { filtering?: FilteringBcBillingGroupGet, page?: number, page_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'bc_id' is set
@@ -981,7 +983,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': bc_id, 'filtering': serializeFiltering(opts['filtering']), 'page': opts['page'], 'page_size': opts['page_size']
     };
     let headerParams: Record<string, string> = {
@@ -996,7 +998,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/billing_group/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1016,7 +1018,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcBillingGroupUpdateCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcBillingGroupUpdate(Access_Token: string, opts: { body?: BillingGroupUpdateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcBillingGroupUpdate(Access_Token: string, opts: { body?: BillingGroupUpdateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -1025,7 +1027,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -1038,7 +1040,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/billing_group/update/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1062,7 +1064,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcGet(Access_Token: string, opts: { bc_id?: string, scene?: string, filtering?: FilteringBcGet, page?: number, page_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcGet(Access_Token: string, opts: { bc_id?: string, scene?: string, filtering?: FilteringBcGet, page?: number, page_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'Access_Token' is set
@@ -1071,7 +1073,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': opts['bc_id'], 'scene': opts['scene'], 'filtering': serializeFiltering(opts['filtering']), 'page': opts['page'], 'page_size': opts['page_size']
     };
     let headerParams: Record<string, string> = {
@@ -1086,7 +1088,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1107,7 +1109,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcImageUploadCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcImageUpload(Access_Token: string, opts: { bc_id?: string, image_file?: Blob } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcImageUpload(Access_Token: string, opts: { bc_id?: string, image_file?: Blob } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'Access_Token' is set
@@ -1116,7 +1118,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -1131,7 +1133,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/image/upload/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1151,7 +1153,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcMemberDeleteCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcMemberDelete(Access_Token: string, opts: { body?: MemberDeleteBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcMemberDelete(Access_Token: string, opts: { body?: MemberDeleteBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -1160,7 +1162,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -1173,7 +1175,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/member/delete/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1197,7 +1199,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcMemberGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcMemberGet(bc_id: string, Access_Token: string, opts: { child_bc_id?: string, filtering?: FilteringBcMemberGet, page?: number, page_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcMemberGet(bc_id: string, Access_Token: string, opts: { child_bc_id?: string, filtering?: FilteringBcMemberGet, page?: number, page_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'bc_id' is set
@@ -1210,7 +1212,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': bc_id, 'child_bc_id': opts['child_bc_id'], 'filtering': serializeFiltering(opts['filtering']), 'page': opts['page'], 'page_size': opts['page_size']
     };
     let headerParams: Record<string, string> = {
@@ -1225,7 +1227,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/member/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1245,7 +1247,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcMemberInviteCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcMemberInvite(Access_Token: string, opts: { body?: MemberInviteBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcMemberInvite(Access_Token: string, opts: { body?: MemberInviteBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -1254,7 +1256,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -1267,7 +1269,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/member/invite/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1287,7 +1289,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcMemberUpdateCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcMemberUpdate(Access_Token: string, opts: { body?: MemberUpdateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcMemberUpdate(Access_Token: string, opts: { body?: MemberUpdateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -1296,7 +1298,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -1309,7 +1311,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/member/update/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1329,7 +1331,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcPartnerAddCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcPartnerAdd(Access_Token: string, opts: { body?: PartnerAddBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcPartnerAdd(Access_Token: string, opts: { body?: PartnerAddBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -1338,7 +1340,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -1351,7 +1353,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/partner/add/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1371,7 +1373,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcPartnerAssetDeleteCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcPartnerAssetDelete(Access_Token: string, opts: { body?: AssetDeleteBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcPartnerAssetDelete(Access_Token: string, opts: { body?: AssetDeleteBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -1380,7 +1382,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -1393,7 +1395,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/partner/asset/delete/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1419,7 +1421,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcPartnerAssetGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcPartnerAssetGet(bc_id: string, partner_id: string, asset_type: string, share_type: string, Access_Token: string, opts: { filtering?: FilteringBcPartnerAssetGet, page?: number, page_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcPartnerAssetGet(bc_id: string, partner_id: string, asset_type: string, share_type: string, Access_Token: string, opts: { filtering?: FilteringBcPartnerAssetGet, page?: number, page_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'bc_id' is set
@@ -1444,7 +1446,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': bc_id, 'partner_id': partner_id, 'asset_type': asset_type, 'share_type': share_type, 'filtering': serializeFiltering(opts['filtering']), 'page': opts['page'], 'page_size': opts['page_size']
     };
     let headerParams: Record<string, string> = {
@@ -1459,7 +1461,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/partner/asset/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1479,7 +1481,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcPartnerDeleteCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcPartnerDelete(Access_Token: string, opts: { body?: PartnerDeleteBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcPartnerDelete(Access_Token: string, opts: { body?: PartnerDeleteBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -1488,7 +1490,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -1501,7 +1503,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/partner/delete/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1524,7 +1526,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcPartnerGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcPartnerGet(bc_id: string, Access_Token: string, opts: { page?: number, page_size?: number, filtering?: FilteringBcPartnerGet } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcPartnerGet(bc_id: string, Access_Token: string, opts: { page?: number, page_size?: number, filtering?: FilteringBcPartnerGet } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'bc_id' is set
@@ -1537,7 +1539,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': bc_id, 'page': opts['page'], 'page_size': opts['page_size'], 'filtering': serializeFiltering(opts['filtering'])
     };
     let headerParams: Record<string, string> = {
@@ -1552,7 +1554,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/partner/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1575,7 +1577,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcPixelLinkGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcPixelLinkGet(bc_id: string, pixel_code: string, Access_Token: string, opts: { page?: number, page_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcPixelLinkGet(bc_id: string, pixel_code: string, Access_Token: string, opts: { page?: number, page_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'bc_id' is set
@@ -1592,7 +1594,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': bc_id, 'pixel_code': pixel_code, 'page': opts['page'], 'page_size': opts['page_size']
     };
     let headerParams: Record<string, string> = {
@@ -1607,7 +1609,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/pixel/link/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1627,7 +1629,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcPixelLinkUpdateCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcPixelLinkUpdate(Access_Token: string, opts: { body?: LinkUpdateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcPixelLinkUpdate(Access_Token: string, opts: { body?: LinkUpdateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -1636,7 +1638,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -1649,7 +1651,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/pixel/link/update/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1669,7 +1671,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcPixelTransferCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcPixelTransfer(Access_Token: string, opts: { body?: PixelTransferBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcPixelTransfer(Access_Token: string, opts: { body?: PixelTransferBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -1678,7 +1680,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -1691,7 +1693,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/pixel/transfer/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1716,7 +1718,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcTransactionGetCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcTransactionGet(bc_id: string, Access_Token: string, opts: { filtering?: FilteringBcTransactionGet, start_date?: string, end_date?: string, page?: number, page_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcTransactionGet(bc_id: string, Access_Token: string, opts: { filtering?: FilteringBcTransactionGet, start_date?: string, end_date?: string, page?: number, page_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = null;
     // verify the required parameter 'bc_id' is set
@@ -1729,7 +1731,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {
+    let queryParams: Record<string, QueryValue> = {
       'bc_id': bc_id, 'filtering': serializeFiltering(opts['filtering']), 'start_date': opts['start_date'], 'end_date': opts['end_date'], 'page': opts['page'], 'page_size': opts['page_size']
     };
     let headerParams: Record<string, string> = {
@@ -1744,7 +1746,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/transaction/get/', 'GET',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -1764,7 +1766,7 @@ export class BCApi {
    * @param {module:api/BCApi~bcTransferCallback} callback The callback function, accepting three arguments: error, data, response
    * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
    */
-  bcTransfer(Access_Token: string, opts: { body?: BcTransferBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  bcTransfer(Access_Token: string, opts: { body?: BcTransferBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     opts = opts || {};
     let postBody = opts['body'];
     // verify the required parameter 'Access_Token' is set
@@ -1773,7 +1775,7 @@ export class BCApi {
     }
 
     let pathParams: Record<string, string> = {};
-    let queryParams: QueryParams = {};
+    let queryParams: Record<string, QueryValue> = {};
     let headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -1786,7 +1788,7 @@ export class BCApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/bc/transfer/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as any,
       authNames, contentTypes, accepts, returnType, callback
     );
   }

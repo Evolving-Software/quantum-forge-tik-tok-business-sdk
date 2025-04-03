@@ -7,13 +7,14 @@
 import ApiClient from '../ApiClient';
 import {BcassetGroupcreateAssets} from './BcassetGroupcreateAssets';
 import {BcassetGroupcreateMembers} from './BcassetGroupcreateMembers';
+import { ModelBase, createArraySpec } from '../types';
 
 /**
  * The AssetGroupCreateBody model module.
  * @module model/AssetGroupCreateBody
  * @version 0.1.4
  */
-export class AssetGroupCreateBody {
+export class AssetGroupCreateBody implements ModelBase {
     /** @type {string} */
     asset_group_name?: string;
     
@@ -48,25 +49,43 @@ export class AssetGroupCreateBody {
     /**
      * Constructs a <code>AssetGroupCreateBody</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
-     * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/AssetGroupCreateBody} obj Optional instance to populate.
+     * @param {Record<string, any>} data The plain JavaScript object bearing properties of interest.
      * @return {module:model/AssetGroupCreateBody} The populated <code>AssetGroupCreateBody</code> instance.
      */
-    static constructFromObject(data: any, obj?: AssetGroupCreateBody): AssetGroupCreateBody {
-        if (!data) return new AssetGroupCreateBody("", [], "", []);
-        
-        obj = obj || new AssetGroupCreateBody("", [], "", []);
-        
-        if (data.hasOwnProperty('asset_group_name'))
-            obj.asset_group_name = ApiClient.convertToType(data['asset_group_name'], 'String');
-        if (data.hasOwnProperty('assets'))
-            obj.assets = ApiClient.convertToType(data['assets'], [BcassetGroupcreateAssets]);
-        if (data.hasOwnProperty('bc_id'))
-            obj.bc_id = ApiClient.convertToType(data['bc_id'], 'String');
-        if (data.hasOwnProperty('members'))
-            obj.members = ApiClient.convertToType(data['members'], [BcassetGroupcreateMembers]);
+    static fromObject(data: Record<string, any>): AssetGroupCreateBody {
+        if (!data) {
+            return new AssetGroupCreateBody("", [], "", []);
+        }
 
-        return obj;
+        const asset_group_name = data.hasOwnProperty('asset_group_name') ? 
+            ApiClient.convertToType(data['asset_group_name'], 'String') as string : "";
+        
+        const assets = data.hasOwnProperty('assets') ? 
+            (data['assets'] as any[]).map(item => BcassetGroupcreateAssets.fromObject(item)) : [];
+        
+        const bc_id = data.hasOwnProperty('bc_id') ? 
+            ApiClient.convertToType(data['bc_id'], 'String') as string : "";
+        
+        const members = data.hasOwnProperty('members') ? 
+            (data['members'] as any[]).map(item => BcassetGroupcreateMembers.fromObject(item)) : [];
+
+        return new AssetGroupCreateBody(asset_group_name, assets, bc_id, members);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AssetGroupCreateBody {
+        return AssetGroupCreateBody.fromObject(data as Record<string, any>);
+    }
+
+    /**
+     * Instance method to construct from object
+     */
+    constructFromObject(data: unknown): this {
+        const result = AssetGroupCreateBody.fromObject(data as Record<string, any>);
+        Object.assign(this, result);
+        return this;
     }
 }
 

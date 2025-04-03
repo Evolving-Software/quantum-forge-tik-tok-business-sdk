@@ -4,24 +4,21 @@
  * This source code is licensed under the MIT license found in
  * the LICENSE file in the root directory of this source tree.
  */
-import ApiClient from '../ApiClient';
-import {CustomAudienceApplyBody} from '../model/CustomAudienceApplyBody';
-import {CustomAudienceCreateBody} from '../model/CustomAudienceCreateBody';
-import {CustomAudienceDeleteBody} from '../model/CustomAudienceDeleteBody';
-import {CustomAudienceShareBody} from '../model/CustomAudienceShareBody';
-import {CustomAudienceUpdateBody} from '../model/CustomAudienceUpdateBody';
-import {DmpcustomAudiencefileuploadContextInfo} from '../model/DmpcustomAudiencefileuploadContextInfo';
+import ApiClientInstance from "../ApiClient"; // Import the default instance
+import { type ApiClientInterface, type JsonValue, type QueryValue } from "../types"; // Import interface, JsonValue, and QueryValue
+import type {CustomAudienceApplyBody} from '../model/CustomAudienceApplyBody';
+import type {CustomAudienceCreateBody} from '../model/CustomAudienceCreateBody';
+import type {CustomAudienceDeleteBody} from '../model/CustomAudienceDeleteBody';
+import type {CustomAudienceShareBody} from '../model/CustomAudienceShareBody';
+import type {CustomAudienceUpdateBody} from '../model/CustomAudienceUpdateBody';
+import type {DmpcustomAudiencefileuploadContextInfo} from '../model/DmpcustomAudiencefileuploadContextInfo';
 import {InlineResponse200} from '../model/InlineResponse200';
-import {LookalikeCreateBody} from '../model/LookalikeCreateBody';
-import {LookalikeUpdateBody} from '../model/LookalikeUpdateBody';
-import {RuleCreateBody} from '../model/RuleCreateBody';
-import {SavedAudienceCreateBody} from '../model/SavedAudienceCreateBody';
-import {SavedAudienceDeleteBody} from '../model/SavedAudienceDeleteBody';
-import {ShareCancelBody} from '../model/ShareCancelBody';
-
-interface QueryParams {
-  [key: string]: string | number | boolean | any[] | undefined;
-}
+import type {LookalikeCreateBody} from '../model/LookalikeCreateBody';
+import type {LookalikeUpdateBody} from '../model/LookalikeUpdateBody';
+import type {RuleCreateBody} from '../model/RuleCreateBody';
+import type {SavedAudienceCreateBody} from '../model/SavedAudienceCreateBody';
+import type {SavedAudienceDeleteBody} from '../model/SavedAudienceDeleteBody';
+import type {ShareCancelBody} from '../model/ShareCancelBody';
 
 /**
 * Audience service.
@@ -29,31 +26,23 @@ interface QueryParams {
 * @version 0.1.4
 */
 export class AudienceApi {
-  private apiClient: ApiClient = {} as ApiClient;
+  private apiClient: ApiClientInterface; // Use interface type
 
-  constructor(apiClient?: ApiClient) {
-    if (apiClient) {
-      this.apiClient = apiClient;
-    } else {
-      import("../ApiClient").then(module => {
-        this.apiClient = module.default.instance;
-      }).catch(() => {
-        throw new Error("Failed to load ApiClient module");
-      });
-    }
+  constructor(apiClient?: ApiClientInterface) {
+    this.apiClient = apiClient || ApiClientInstance;
   }
 
   /**
    * Apply a shared custom audience
    */
-  dmpCustomAudienceApply(Access_Token: string, opts: { body?: CustomAudienceApplyBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  dmpCustomAudienceApply(Access_Token: string, opts: { body?: CustomAudienceApplyBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     const postBody = opts['body'];
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: QueryParams = {};
+    const queryParams: Record<string, QueryValue> = {};
     const headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -66,7 +55,7 @@ export class AudienceApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/dmp/custom_audience/apply/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as unknown as JsonValue,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -78,20 +67,21 @@ export class AudienceApi {
     page?: number,
     page_size?: number,
     timezone?: string,
-    context_info?: any
-  } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+    context_info?: any // Consider defining a stricter type if possible
+  } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     if (!advertiser_id || !custom_audience_ids || !Access_Token) {
       throw new Error("Missing required parameters");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: QueryParams = {
+    const queryParams: Record<string, QueryValue> = {
       'advertiser_id': advertiser_id,
-      'custom_audience_ids': this.apiClient.buildCollectionParam(custom_audience_ids, 'multi'),
+      // Cast string[] via unknown to QueryValue
+      'custom_audience_ids': custom_audience_ids as unknown as QueryValue,
       'page': opts.page,
       'page_size': opts.page_size,
       'timezone': opts.timezone,
-      'context_info': opts.context_info
+      'context_info': opts.context_info as QueryValue // Cast context_info as well
     };
 
     const headerParams: Record<string, string> = {
@@ -115,14 +105,14 @@ export class AudienceApi {
   /**
    * Create an audience by file
    */
-  dmpCustomAudienceCreate(Access_Token: string, opts: { body?: CustomAudienceCreateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  dmpCustomAudienceCreate(Access_Token: string, opts: { body?: CustomAudienceCreateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     const postBody = opts['body'];
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: QueryParams = {};
+    const queryParams: Record<string, QueryValue> = {};
     const headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -135,7 +125,7 @@ export class AudienceApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/dmp/custom_audience/create/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as unknown as JsonValue,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -143,14 +133,14 @@ export class AudienceApi {
   /**
    * Delete audiences
    */
-  dmpCustomAudienceDelete(Access_Token: string, opts: { body?: CustomAudienceDeleteBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  dmpCustomAudienceDelete(Access_Token: string, opts: { body?: CustomAudienceDeleteBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     const postBody = opts['body'];
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: Record<string, any> = {};
+    const queryParams: Record<string, QueryValue> = {};
     const headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -163,7 +153,7 @@ export class AudienceApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/dmp/custom_audience/delete/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as unknown as JsonValue,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -178,21 +168,21 @@ export class AudienceApi {
     file?: Blob,
     file_name?: string,
     file_signature?: string
-  } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     const postBody = null;
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: Record<string, any> = {};
+    const queryParams: Record<string, QueryValue> = {};
     const headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
     const formParams: Record<string, any> = {
       'advertiser_id': opts['advertiser_id'],
       'calculate_type': opts['calculate_type'],
-      'context_info': opts['context_info'],
+      'context_info': typeof opts['context_info'] === 'object' ? JSON.stringify(opts['context_info']) : opts['context_info'],
       'file': opts['file'],
       'file_name': opts['file_name'],
       'file_signature': opts['file_signature']
@@ -213,15 +203,16 @@ export class AudienceApi {
   /**
    * Obtain the details of specified audiences
    */
-  dmpCustomAudienceGet(advertiser_id: string, custom_audience_ids: string[], Access_Token: string, opts: { history_size?: number } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  dmpCustomAudienceGet(advertiser_id: string, custom_audience_ids: string[], Access_Token: string, opts: { history_size?: number } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     if (!advertiser_id || !custom_audience_ids || !Access_Token) {
       throw new Error("Missing required parameters");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: Record<string, any> = {
+    const queryParams: Record<string, QueryValue> = {
       'advertiser_id': advertiser_id,
-      'custom_audience_ids': this.apiClient.buildCollectionParam(custom_audience_ids, 'multi'),
+      // Cast string[] via unknown to QueryValue
+      'custom_audience_ids': custom_audience_ids as unknown as QueryValue,
       'history_size': opts.history_size
     };
 
@@ -250,20 +241,21 @@ export class AudienceApi {
     custom_audience_ids?: string[],
     page?: number,
     page_size?: number
-  } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     if (!advertiser_id || !Access_Token) {
       throw new Error("Missing required parameters");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: Record<string, any> = {
+    const queryParams: Record<string, QueryValue> = {
       'advertiser_id': advertiser_id,
       'page': opts.page,
       'page_size': opts.page_size
     };
 
     if (opts.custom_audience_ids) {
-      queryParams['custom_audience_ids'] = this.apiClient.buildCollectionParam(opts.custom_audience_ids, 'multi');
+      // Cast string[] via unknown to QueryValue
+      queryParams['custom_audience_ids'] = opts.custom_audience_ids as unknown as QueryValue;
     }
 
     const headerParams: Record<string, string> = {
@@ -287,14 +279,14 @@ export class AudienceApi {
   /**
    * Create a lookalike audience
    */
-  dmpCustomAudienceLookalikeCreate(Access_Token: string, opts: { body?: LookalikeCreateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  dmpCustomAudienceLookalikeCreate(Access_Token: string, opts: { body?: LookalikeCreateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     const postBody = opts['body'];
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: Record<string, any> = {};
+    const queryParams: Record<string, QueryValue> = {};
     const headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -307,7 +299,7 @@ export class AudienceApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/dmp/custom_audience/lookalike/create/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as unknown as JsonValue,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -315,14 +307,14 @@ export class AudienceApi {
   /**
    * Manually refresh a Lookalike Audience
    */
-  dmpCustomAudienceLookalikeUpdate(Access_Token: string, opts: { body?: LookalikeUpdateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  dmpCustomAudienceLookalikeUpdate(Access_Token: string, opts: { body?: LookalikeUpdateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     const postBody = opts['body'];
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: Record<string, any> = {};
+    const queryParams: Record<string, QueryValue> = {};
     const headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -335,7 +327,7 @@ export class AudienceApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/dmp/custom_audience/lookalike/update/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as unknown as JsonValue,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -343,14 +335,14 @@ export class AudienceApi {
   /**
    * Create an audience by rules
    */
-  dmpCustomAudienceRuleCreate(Access_Token: string, opts: { body?: RuleCreateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  dmpCustomAudienceRuleCreate(Access_Token: string, opts: { body?: RuleCreateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     const postBody = opts['body'];
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: Record<string, any> = {};
+    const queryParams: Record<string, QueryValue> = {};
     const headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -363,7 +355,7 @@ export class AudienceApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/dmp/custom_audience/rule/create/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as unknown as JsonValue,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -371,14 +363,14 @@ export class AudienceApi {
   /**
    * Share custom audiences with other advertisers
    */
-  dmpCustomAudienceShare(Access_Token: string, opts: { body?: CustomAudienceShareBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  dmpCustomAudienceShare(Access_Token: string, opts: { body?: CustomAudienceShareBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     const postBody = opts['body'];
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: Record<string, any> = {};
+    const queryParams: Record<string, QueryValue> = {};
     const headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -391,7 +383,7 @@ export class AudienceApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/dmp/custom_audience/share/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as unknown as JsonValue,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -399,14 +391,14 @@ export class AudienceApi {
   /**
    * Stop sharing custom audiences with other advertisers
    */
-  dmpCustomAudienceShareCancel(Access_Token: string, opts: { body?: ShareCancelBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  dmpCustomAudienceShareCancel(Access_Token: string, opts: { body?: ShareCancelBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     const postBody = opts['body'];
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: Record<string, any> = {};
+    const queryParams: Record<string, QueryValue> = {};
     const headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -419,7 +411,7 @@ export class AudienceApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/dmp/custom_audience/share/cancel/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as unknown as JsonValue,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -427,16 +419,16 @@ export class AudienceApi {
   /**
    * Get the sharing log of a custom audience
    */
-  dmpCustomAudienceShareLog(advertiser_id: string, custom_audience_id: string, Access_Token: string, opts: { context_info?: any } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  dmpCustomAudienceShareLog(advertiser_id: string, custom_audience_id: string, Access_Token: string, opts: { context_info?: any } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     if (!advertiser_id || !custom_audience_id || !Access_Token) {
       throw new Error("Missing required parameters");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: Record<string, any> = {
+    const queryParams: Record<string, QueryValue> = {
       'advertiser_id': advertiser_id,
       'custom_audience_id': custom_audience_id,
-      'context_info': opts.context_info
+      'context_info': opts.context_info as QueryValue // Cast context_info
     };
 
     const headerParams: Record<string, string> = {
@@ -460,14 +452,14 @@ export class AudienceApi {
   /**
    * Update the details of an audience
    */
-  dmpCustomAudienceUpdate(Access_Token: string, opts: { body?: CustomAudienceUpdateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  dmpCustomAudienceUpdate(Access_Token: string, opts: { body?: CustomAudienceUpdateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     const postBody = opts['body'];
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: Record<string, any> = {};
+    const queryParams: Record<string, QueryValue> = {};
     const headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -480,7 +472,7 @@ export class AudienceApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/dmp/custom_audience/update/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as unknown as JsonValue,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
@@ -488,14 +480,14 @@ export class AudienceApi {
   /**
    * Create a Saved Audience
    */
-  dmpSavedAudienceCreate(Access_Token: string, opts: { body?: SavedAudienceCreateBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  dmpSavedAudienceCreate(Access_Token: string, opts: { body?: SavedAudienceCreateBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     const postBody = opts['body'];
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: Record<string, any> = {};
+    const queryParams: Record<string, QueryValue> = {};
     const headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -508,22 +500,22 @@ export class AudienceApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/dmp/saved_audience/create/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as unknown as JsonValue,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
 
   /**
-   * Delete Saved Audiences
+   * Delete Saved Audience
    */
-  dmpSavedAudienceDelete(Access_Token: string, opts: { body?: SavedAudienceDeleteBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  dmpSavedAudienceDelete(Access_Token: string, opts: { body?: SavedAudienceDeleteBody } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     const postBody = opts['body'];
     if (!Access_Token) {
       throw new Error("Missing required parameter 'Access_Token'");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: Record<string, any> = {};
+    const queryParams: Record<string, QueryValue> = {};
     const headerParams: Record<string, string> = {
       'Access-Token': Access_Token
     };
@@ -536,32 +528,33 @@ export class AudienceApi {
 
     return this.apiClient.callApi(
       '/open_api/v1.3/dmp/saved_audience/delete/', 'POST',
-      pathParams, queryParams, headerParams, formParams, postBody,
+      pathParams, queryParams, headerParams, formParams, postBody as unknown as JsonValue,
       authNames, contentTypes, accepts, returnType, callback
     );
   }
 
   /**
-   * Get the details of Saved Audiences
+   * Get Saved Audience
    */
   dmpSavedAudienceList(advertiser_id: string, Access_Token: string, opts: {
     saved_audience_ids?: string[],
     page?: number,
     page_size?: number
-  } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: string) => void) {
+  } = {}, callback?: (error: Error | null, data?: unknown, response?: Response) => void) {
     if (!advertiser_id || !Access_Token) {
       throw new Error("Missing required parameters");
     }
 
     const pathParams: Record<string, string> = {};
-    const queryParams: Record<string, any> = {
+    const queryParams: Record<string, QueryValue> = {
       'advertiser_id': advertiser_id,
       'page': opts.page,
       'page_size': opts.page_size
     };
 
     if (opts.saved_audience_ids) {
-      queryParams['saved_audience_ids'] = this.apiClient.buildCollectionParam(opts.saved_audience_ids, 'multi');
+      // Cast string[] via unknown to QueryValue
+      queryParams['saved_audience_ids'] = opts.saved_audience_ids as unknown as QueryValue;
     }
 
     const headerParams: Record<string, string> = {

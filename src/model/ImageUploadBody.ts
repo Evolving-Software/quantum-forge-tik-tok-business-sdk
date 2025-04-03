@@ -40,7 +40,8 @@ export class ImageUploadBody {
     if (data.hasOwnProperty('bc_id'))
       obj.bc_id = ApiClient.convertToType(data['bc_id'], 'String');
     if (data.hasOwnProperty('image_file'))
-      obj.image_file = ApiClient.convertToType(data['image_file'], 'File');
+      // Use 'Blob' type literal, as File inherits from Blob and convertToType handles Blob
+      obj.image_file = ApiClient.convertToType(data['image_file'], 'Blob') as File | undefined;
 
     return obj;
   }

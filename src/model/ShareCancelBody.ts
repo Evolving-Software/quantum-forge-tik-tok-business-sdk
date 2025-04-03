@@ -42,9 +42,9 @@ export class ShareCancelBody {
             throw new Error("Data cannot be null");
         }
 
-        const advertiser_id = ApiClient.convertToType(data['advertiser_id'], 'String');
-        const custom_audience_id = ApiClient.convertToType(data['custom_audience_id'], 'String');
-        const shared_advertiser_id = ApiClient.convertToType(data['shared_advertiser_id'], 'String');
+        const advertiser_id = ApiClient.convertToType(data['advertiser_id'], 'String') as string;
+        const custom_audience_id = ApiClient.convertToType(data['custom_audience_id'], 'String') as string;
+        const shared_advertiser_id = ApiClient.convertToType(data['shared_advertiser_id'], 'String') as string;
 
         if (!obj) {
             obj = new ShareCancelBody(advertiser_id, custom_audience_id, shared_advertiser_id);

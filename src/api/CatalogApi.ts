@@ -4,10 +4,15 @@
  * This source code is licensed under the MIT license found in
  * the LICENSE file in the root directory of this source tree.
  */
-import ApiClient from "../ApiClient";
+// Import the default instance and rename it for clarity
+import ApiClientInstance from "../ApiClient";
+// Import the interface type
+import { ApiClientInterface } from "@/types";
+// Import required model types (though InlineResponse200 is the only one used here)
 import { InlineResponse200 } from '../model/InlineResponse200';
 
-type Callback = (error: string | null, data?: InlineResponse200, response?: string) => void;
+// Define the callback type matching ApiClientInterface
+type Callback = (error: Error | null, data?: InlineResponse200, response?: Response) => void;
 
 /**
 * Catalog service.
@@ -15,7 +20,7 @@ type Callback = (error: string | null, data?: InlineResponse200, response?: stri
 * @version 0.1.4
 */
 export class CatalogApi {
-    private apiClient: ApiClient;
+    private apiClient: ApiClientInterface; // Use interface type
 
     /**
     * Constructs a new CatalogApi. 
@@ -24,8 +29,8 @@ export class CatalogApi {
     * @param {ApiClient} [apiClient] Optional API client implementation to use,
     * default to {@link ApiClient#instance} if unspecified.
     */
-    constructor(apiClient?: ApiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
+    constructor(apiClient?: ApiClientInterface) {
+        this.apiClient = apiClient || ApiClientInstance;
     }
 
     /**
@@ -69,9 +74,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/available_country/get/', 'GET',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody, // No body for GET
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -111,9 +116,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/capitalize/', 'POST',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody as any, // Cast body
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -153,9 +158,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/create/', 'POST',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody as any, // Cast body
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -195,9 +200,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/delete/', 'POST',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody as any, // Cast body
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -237,9 +242,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/eventsource/bind/', 'POST',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody as any, // Cast body
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -288,9 +293,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/eventsource_bind/get/', 'GET',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody, // No body for GET
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -330,9 +335,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/eventsource/unbind/', 'POST',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody as any, // Cast body
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -372,9 +377,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/feed/delete/', 'POST',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody as any, // Cast body
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -426,9 +431,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/feed/get/', 'GET',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody, // No body for GET
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -479,9 +484,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/get/', 'GET',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody, // No body for GET
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -530,9 +535,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/lexicon/get/', 'GET',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody, // No body for GET
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -570,9 +575,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/location_currency/get/', 'GET',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody, // No body for GET
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -621,9 +626,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/overview/', 'GET',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody, // No body for GET
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -663,9 +668,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/product/delete/', 'POST',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody as any, // Cast body
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -705,9 +710,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/product/file/', 'POST',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody as any, // Cast body
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -766,9 +771,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/set/product/get/', 'GET',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody, // No body for GET
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -808,9 +813,9 @@ export class CatalogApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/catalog/update/', 'POST',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody as any, // Cast body
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
 }

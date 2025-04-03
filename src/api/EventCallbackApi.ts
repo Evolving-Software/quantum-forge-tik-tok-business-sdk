@@ -4,10 +4,17 @@
  * This source code is licensed under the MIT license found in
  * the LICENSE file in the root directory of this source tree.
  */
-import ApiClient from "../ApiClient";
+// Import the default instance and rename it for clarity
+import ApiClientInstance from "../ApiClient";
+// Import the interface type
+import { ApiClientInterface } from "@/types";
+// Import required model types
 import {InlineResponse200} from '../model/InlineResponse200';
-import {PixelBatchBody} from '../model/PixelBatchBody';
-import PixelTrackBody from '../model/PixelTrackBody';
+import type {PixelBatchBody} from '../model/PixelBatchBody';
+import type PixelTrackBody from '../model/PixelTrackBody';
+
+// Define the callback type matching ApiClientInterface
+type Callback = (error: Error | null, data?: InlineResponse200, response?: Response) => void;
 
 /**
 * EventCallback service.
@@ -15,7 +22,7 @@ import PixelTrackBody from '../model/PixelTrackBody';
 * @version 0.1.4
 */
 export class EventCallbackApi {
-    private apiClient: ApiClient;
+    private apiClient: ApiClientInterface; // Use interface type
 
     /**
     * Constructs a new EventCallbackApi. 
@@ -24,8 +31,8 @@ export class EventCallbackApi {
     * @param {module:ApiClient} [apiClient] Optional API client implementation to use,
     * default to {@link module:ApiClient#instance} if unspecified.
     */
-    constructor(apiClient?: ApiClient) {
-        this.apiClient = apiClient || ApiClient.instance;
+    constructor(apiClient?: ApiClientInterface) {
+        this.apiClient = apiClient || ApiClientInstance;
     }
 
     /**
@@ -44,8 +51,8 @@ export class EventCallbackApi {
      * @param {Function} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    pixelBatch(Access_Token: string, opts: { body?: PixelBatchBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: any) => void) {
-        let postBody = opts['body'];
+    pixelBatch(Access_Token: string, opts: { body?: PixelBatchBody } = {}, callback?: Callback): Promise<InlineResponse200> {
+        const postBody = opts.body;
         // verify the required parameter 'Access_Token' is set
         if (Access_Token === undefined || Access_Token === null) {
             throw new Error("Missing the required parameter 'Access_Token' when calling pixelBatch");
@@ -68,9 +75,9 @@ export class EventCallbackApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/pixel/batch/', 'POST',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody as any, // Cast body
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 
     /**
@@ -89,8 +96,8 @@ export class EventCallbackApi {
      * @param {Function} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link <&vendorExtensions.x-jsdoc-type>}
      */
-    pixelTrack(Access_Token: string, opts: { body?: PixelTrackBody } = {}, callback?: (error: string | null, data?: InlineResponse200, response?: any) => void) {
-        let postBody = opts['body'];
+    pixelTrack(Access_Token: string, opts: { body?: PixelTrackBody } = {}, callback?: Callback): Promise<InlineResponse200> {
+        const postBody = opts.body;
         // verify the required parameter 'Access_Token' is set
         if (Access_Token === undefined || Access_Token === null) {
             throw new Error("Missing the required parameter 'Access_Token' when calling pixelTrack");
@@ -113,8 +120,8 @@ export class EventCallbackApi {
 
         return this.apiClient.callApi(
             '/open_api/v1.3/pixel/track/', 'POST',
-            pathParams, queryParams, headerParams, formParams, postBody,
-            authNames, contentTypes, accepts, returnType, callback
-        );
+            pathParams, queryParams, headerParams, formParams, postBody as any, // Cast body
+            authNames, contentTypes, accepts, returnType, callback as any // Cast callback
+        ) as Promise<InlineResponse200>; // Cast return type
     }
 }

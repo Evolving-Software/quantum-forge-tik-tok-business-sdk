@@ -1,45 +1,45 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
-import ApiClient from '../ApiClient';
+import { ApiClient } from "../ApiClient";
+import type { ModelBase } from "../types";
 
 /**
- * The BcassetGroupcreateMembers model module.
- * @module model/BcassetGroupcreateMembers
- * @version 0.1.4
+ * The BcassetGroupcreateMembers model.
  */
-export class BcassetGroupcreateMembers {
-    /** Map of asset roles */
-    asset_roles?: { [key: string]: string };
+export class BcassetGroupcreateMembers implements ModelBase {
+    'bcId'?: string;
+    'memberType'?: string;
 
-    /** Member ID */
-    member_id: string;
-
-    /**
-     * Constructs a new <code>BcassetGroupcreateMembers</code>.
-     * @param member_id The member ID
-     */
-    constructor(member_id: string) {
-        this.member_id = member_id;
+    constructor() {
+        // Initialize any required fields
     }
 
     /**
-     * Constructs a <code>BcassetGroupcreateMembers</code> from a plain JavaScript object
+     * Returns an instance of BcassetGroupcreateMembers populated with the given data
      */
-    static constructFromObject(data: any, obj?: BcassetGroupcreateMembers): BcassetGroupcreateMembers {
-        if (!data || !data.member_id) {
-            throw new Error('Member ID is required');
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
+
+        if (typedData['bcId'] !== undefined) {
+            this['bcId'] = ApiClient.convertToType(typedData['bcId'], 'String') as string;
         }
-        
-        obj = obj || new BcassetGroupcreateMembers(data.member_id);
-        
-        if (data.hasOwnProperty('asset_roles'))
-            obj.asset_roles = ApiClient.convertToType(data['asset_roles'], {'String': 'String'});
-        
-        return obj;
+        if (typedData['memberType'] !== undefined) {
+            this['memberType'] = ApiClient.convertToType(typedData['memberType'], 'String') as string;
+        }
+
+        return this;
+    }
+
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): BcassetGroupcreateMembers {
+        const instance = new BcassetGroupcreateMembers();
+        return instance.constructFromObject(data);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): BcassetGroupcreateMembers {
+        return BcassetGroupcreateMembers.fromObject(data);
     }
 }
-

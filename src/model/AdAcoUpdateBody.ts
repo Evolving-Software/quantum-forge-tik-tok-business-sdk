@@ -1,130 +1,117 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
-import ApiClient from '../ApiClient';
-import {AdAcoBodyAvatarIconList} from './AdAcoBodyAvatarIconList';
-import {AdAcoBodyCallToActionList} from './AdAcoBodyCallToActionList';
-import {AdAcoBodyCardList} from './AdAcoBodyCardList';
-import {AdAcoBodyCommonMaterial} from './AdAcoBodyCommonMaterial';
-import {AdAcoBodyDeeplinkList} from './AdAcoBodyDeeplinkList';
-import {AdAcoBodyDisplayNameList} from './AdAcoBodyDisplayNameList';
-import {AdAcoBodyLandingPageUrls} from './AdAcoBodyLandingPageUrls';
-import {AdAcoBodyMediaInfoList} from './AdAcoBodyMediaInfoList';
-import {AdAcoBodyPageList} from './AdAcoBodyPageList';
-import {AdAcoBodyTitleList} from './AdAcoBodyTitleList';
+import { ApiClient } from "../ApiClient";
+import { type ModelBase, createArraySpec } from "../types";
+import { AdAcoBodyAvatarIconList } from "./AdAcoBodyAvatarIconList";
+import { AdAcoBodyCallToActionList } from "./AdAcoBodyCallToActionList";
+import { AdAcoBodyCardList } from "./AdAcoBodyCardList";
+import { AdAcoBodyDeeplinkList } from "./AdAcoBodyDeeplinkList";
+import { AdAcoBodyDisplayNameList } from "./AdAcoBodyDisplayNameList";
+import { AdAcoBodyLandingPageUrls } from "./AdAcoBodyLandingPageUrls";
+import { AdAcoBodyMediaInfoList } from "./AdAcoBodyMediaInfoList";
+import { AdAcoBodyPageList } from "./AdAcoBodyPageList";
+import { AdAcoBodyTitleList } from "./AdAcoBodyTitleList";
 
 /**
- * The AdAcoUpdateBody model module.
- * @module model/AdAcoUpdateBody
- * @version 0.1.4
+ * The AdAcoUpdateBody model.
  */
-export class AdAcoUpdateBody {
-  /**
-   * Ad group ID. The ID should be of the ad group that you will enable Automated Creative Optimization for, and `creative_material_mode` for the ad group must be set as `DYNAMIC`.
-   */
-  adgroup_id?: string;
+export class AdAcoUpdateBody implements ModelBase {
+    'adName'?: string;
+    'appName'?: string;
+    'avatarIconList'?: AdAcoBodyAvatarIconList[];
+    'callToActionList'?: AdAcoBodyCallToActionList[];
+    'cardList'?: AdAcoBodyCardList[];
+    'deeplinkList'?: AdAcoBodyDeeplinkList[];
+    'displayNameList'?: AdAcoBodyDisplayNameList[];
+    'landingPageUrls'?: AdAcoBodyLandingPageUrls[];
+    'mediaInfoList'?: AdAcoBodyMediaInfoList[];
+    'pageList'?: AdAcoBodyPageList[];
+    'titleList'?: AdAcoBodyTitleList[];
 
-  /**
-   * Advertiser ID. 
-   */
-  advertiser_id: string;
-
-  /**
-   * Avatar image list.
-   */
-  avatar_icon_list?: AdAcoBodyAvatarIconList[];
-
-  /**
-   * Call-to-action list. For TikTok ads, either this field or `call_to_action_id` must be specified. If both are specified, this field will be ignored.
-   */
-  call_to_action_list?: AdAcoBodyCallToActionList[];
-
-  /**
-   * Card ID list. Length range- [0,1].
-   */
-  card_list?: AdAcoBodyCardList[];
-
-  /**
-   * Common material
-   */
-  common_material?: AdAcoBodyCommonMaterial;
-
-  /**
-   * List of open URLs. Length range- [0,1]
-   */
-  deeplink_list?: AdAcoBodyDeeplinkList[];
-
-  /**
-   * Display names.
-   */
-  display_name_list?: AdAcoBodyDisplayNameList[];
-
-  /**
-   * Multiple landing page URLs.
-   */
-  landing_page_urls?: AdAcoBodyLandingPageUrls[];
-
-  /**
-   * List of media information.
-   */
-  media_info_list?: AdAcoBodyMediaInfoList[];
-
-  /**
-   * Page ID list.
-   */
-  page_list?: AdAcoBodyPageList[];
-
-  /**
-   * List of ad titles (also called ad texts).
-   */
-  title_list?: AdAcoBodyTitleList[];
-
-  /**
-   * Constructs a new AdAcoUpdateBody.
-   * @param advertiser_id Advertiser ID. 
-   */
-  constructor(advertiser_id: string) {
-    this.advertiser_id = advertiser_id;
-  }
-
-  /**
-   * Constructs a AdAcoUpdateBody from a plain JavaScript object, optionally creating a new instance.
-   * Copies all relevant properties from data to obj if supplied or a new instance if not.
-   */
-  static constructFromObject(data: any, obj?: AdAcoUpdateBody): AdAcoUpdateBody {
-    if (!data) {
-      throw new Error('Data must be provided to construct AdAcoUpdateBody');
+    constructor() {
+        // Initialize any required fields
     }
-    
-    obj = obj || new AdAcoUpdateBody(data['advertiser_id']);
-    
-    if (data.hasOwnProperty('adgroup_id'))
-      obj.adgroup_id = ApiClient.convertToType(data['adgroup_id'], 'String');
-    if (data.hasOwnProperty('avatar_icon_list'))
-      obj.avatar_icon_list = ApiClient.convertToType(data['avatar_icon_list'], [AdAcoBodyAvatarIconList]);
-    if (data.hasOwnProperty('call_to_action_list'))
-      obj.call_to_action_list = ApiClient.convertToType(data['call_to_action_list'], [AdAcoBodyCallToActionList]);
-    if (data.hasOwnProperty('card_list'))
-      obj.card_list = ApiClient.convertToType(data['card_list'], [AdAcoBodyCardList]);
-    if (data.hasOwnProperty('common_material'))
-      obj.common_material = AdAcoBodyCommonMaterial.constructFromObject(data['common_material']);
-    if (data.hasOwnProperty('deeplink_list'))
-      obj.deeplink_list = ApiClient.convertToType(data['deeplink_list'], [AdAcoBodyDeeplinkList]);
-    if (data.hasOwnProperty('display_name_list'))
-      obj.display_name_list = ApiClient.convertToType(data['display_name_list'], [AdAcoBodyDisplayNameList]);
-    if (data.hasOwnProperty('landing_page_urls'))
-      obj.landing_page_urls = ApiClient.convertToType(data['landing_page_urls'], [AdAcoBodyLandingPageUrls]);
-    if (data.hasOwnProperty('media_info_list'))
-      obj.media_info_list = ApiClient.convertToType(data['media_info_list'], [AdAcoBodyMediaInfoList]);
-    if (data.hasOwnProperty('page_list'))
-      obj.page_list = ApiClient.convertToType(data['page_list'], [AdAcoBodyPageList]);
-    if (data.hasOwnProperty('title_list'))
-      obj.title_list = ApiClient.convertToType(data['title_list'], [AdAcoBodyTitleList]);
 
-    return obj;
-  }
+    /**
+     * Returns an instance of AdAcoUpdateBody populated with the given data
+     */
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
+
+        if (typedData['adName'] !== undefined) {
+            this['adName'] = ApiClient.convertToType(typedData['adName'], 'String') as string;
+        }
+        if (typedData['appName'] !== undefined) {
+            this['appName'] = ApiClient.convertToType(typedData['appName'], 'String') as string;
+        }
+        if (typedData['avatarIconList'] !== undefined) {
+            this['avatarIconList'] = ApiClient.convertToType(
+                typedData['avatarIconList'], 
+                createArraySpec(AdAcoBodyAvatarIconList)
+            ) as AdAcoBodyAvatarIconList[];
+        }
+        if (typedData['callToActionList'] !== undefined) {
+            this['callToActionList'] = ApiClient.convertToType(
+                typedData['callToActionList'],
+                createArraySpec(AdAcoBodyCallToActionList)
+            ) as AdAcoBodyCallToActionList[];
+        }
+        if (typedData['cardList'] !== undefined) {
+            this['cardList'] = ApiClient.convertToType(
+                typedData['cardList'],
+                createArraySpec(AdAcoBodyCardList)
+            ) as AdAcoBodyCardList[];
+        }
+        if (typedData['deeplinkList'] !== undefined) {
+            this['deeplinkList'] = ApiClient.convertToType(
+                typedData['deeplinkList'],
+                createArraySpec(AdAcoBodyDeeplinkList)
+            ) as AdAcoBodyDeeplinkList[];
+        }
+        if (typedData['displayNameList'] !== undefined) {
+            this['displayNameList'] = ApiClient.convertToType(
+                typedData['displayNameList'],
+                createArraySpec(AdAcoBodyDisplayNameList)
+            ) as AdAcoBodyDisplayNameList[];
+        }
+        if (typedData['landingPageUrls'] !== undefined) {
+            this['landingPageUrls'] = ApiClient.convertToType(
+                typedData['landingPageUrls'],
+                createArraySpec(AdAcoBodyLandingPageUrls)
+            ) as AdAcoBodyLandingPageUrls[];
+        }
+        if (typedData['mediaInfoList'] !== undefined) {
+            this['mediaInfoList'] = ApiClient.convertToType(
+                typedData['mediaInfoList'],
+                createArraySpec(AdAcoBodyMediaInfoList)
+            ) as AdAcoBodyMediaInfoList[];
+        }
+        if (typedData['pageList'] !== undefined) {
+            this['pageList'] = ApiClient.convertToType(
+                typedData['pageList'],
+                createArraySpec(AdAcoBodyPageList)
+            ) as AdAcoBodyPageList[];
+        }
+        if (typedData['titleList'] !== undefined) {
+            this['titleList'] = ApiClient.convertToType(
+                typedData['titleList'],
+                createArraySpec(AdAcoBodyTitleList)
+            ) as AdAcoBodyTitleList[];
+        }
+
+        return this;
+    }
+
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): AdAcoUpdateBody {
+        const instance = new AdAcoUpdateBody();
+        return instance.constructFromObject(data);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AdAcoUpdateBody {
+        return AdAcoUpdateBody.fromObject(data);
+    }
 }
-

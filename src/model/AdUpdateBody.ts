@@ -1,58 +1,56 @@
-/*
- * Copyright 2023 TikTok Pte. Ltd.
- *
- * This source code is licensed under the MIT license found in
- * the LICENSE file in the root directory of this source tree.
- */
-import ApiClient from '../ApiClient';
-import {AdupdateCreatives} from './AdupdateCreatives';
+import { ApiClient } from "../ApiClient";
+import { type ModelBase, createArraySpec } from "../types";
+import { AdupdateCreatives } from "./AdupdateCreatives";
 
 /**
- * The AdUpdateBody model module.
- * @module model/AdUpdateBody
- * @version 0.1.4
+ * The AdUpdateBody model.
  */
-export class AdUpdateBody {
-    /** @type {string} */
-    adgroup_id?: string;
-    
-    /** @type {string} */
-    advertiser_id?: string;
-    
-    /** @type {AdupdateCreatives[]} */
-    creatives?: AdupdateCreatives[];
+export class AdUpdateBody implements ModelBase {
+    'adIds'?: string[];
+    'advertiserId'?: string;
+    'creatives'?: AdupdateCreatives[];
 
-    /**
-     * Constructs a new <code>AdUpdateBody</code>.
-     * @param adgroup_id {string}
-     * @param advertiser_id {string}
-     * @param creatives {AdupdateCreatives[]}
-     */
-    constructor(adgroup_id: string, advertiser_id: string, creatives: AdupdateCreatives[]) {
-        this.adgroup_id = adgroup_id;
-        this.advertiser_id = advertiser_id;
-        this.creatives = creatives;
+    constructor() {
+        // Initialize any required fields
     }
 
     /**
-     * Constructs a <code>AdUpdateBody</code> from a plain JavaScript object.
-     * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/AdUpdateBody} obj Optional instance to populate.
-     * @return {module:model/AdUpdateBody} The populated instance.
+     * Returns an instance of AdUpdateBody populated with the given data
      */
-    static constructFromObject(data: any, obj?: AdUpdateBody): AdUpdateBody {
-        if (!data) return new AdUpdateBody("", "", []);
-        
-        obj = obj || new AdUpdateBody("", "", []);
-        
-        if (data.hasOwnProperty('adgroup_id'))
-            obj.adgroup_id = ApiClient.convertToType(data['adgroup_id'], 'String');
-        if (data.hasOwnProperty('advertiser_id'))
-            obj.advertiser_id = ApiClient.convertToType(data['advertiser_id'], 'String');
-        if (data.hasOwnProperty('creatives'))
-            obj.creatives = ApiClient.convertToType(data['creatives'], [AdupdateCreatives]);
+    constructFromObject(data: unknown): this {
+        const typedData = data as Record<string, unknown>;
 
-        return obj;
+        if (typedData['adIds'] !== undefined) {
+            this['adIds'] = ApiClient.convertToType(
+                typedData['adIds'],
+                createArraySpec('String')
+            ) as string[];
+        }
+        if (typedData['advertiserId'] !== undefined) {
+            this['advertiserId'] = ApiClient.convertToType(typedData['advertiserId'], 'String') as string;
+        }
+        if (typedData['creatives'] !== undefined) {
+            this['creatives'] = ApiClient.convertToType(
+                typedData['creatives'],
+                createArraySpec(AdupdateCreatives)
+            ) as AdupdateCreatives[];
+        }
+
+        return this;
+    }
+
+    /**
+     * Creates a new instance from a plain object
+     */
+    static fromObject(data: unknown): AdUpdateBody {
+        const instance = new AdUpdateBody();
+        return instance.constructFromObject(data);
+    }
+
+    /**
+     * Static helper method to construct an instance from object data
+     */
+    static constructFromObject(data: unknown): AdUpdateBody {
+        return AdUpdateBody.fromObject(data);
     }
 }
-
